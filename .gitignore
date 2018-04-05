@@ -1,0 +1,11 @@
+/node_modules/
+/.awcache/
+bin/
+theme/
+.vscode/
+.ref/
+public/meta/
+public/post/
+
+package-lock.json
+*.log
