@@ -1,7 +1,10 @@
+import { cyan } from 'cli-color';
 import { deferred } from 'deferred-factory';
-import { createReadStream, statSync } from 'fs';
-import { basename } from 'path';
+import { createReadStream, readdirSync, statSync } from 'fs';
+import { basename, extname, join } from 'path';
 import { createInterface } from 'readline';
+import config from './blog-config';
+import { postDir, resolvePostPath } from './workspace';
 
 export interface PostMetadata {
   title: string;
@@ -13,56 +16,16 @@ export interface PostMetadata {
   cover?: string;
 }
 
-const POST_METADATA_KEYS = [
-  'title',
-  'description',
-  'date',
-  'tags',
-  'categories',
-  'cover'
-];
-
-const POST_PREVIEW_LEN = 260;
-
-const enum READ_STATUS {
-  WAIT_START,
-  READ_META,
-  READ_CONTENT,
-  DONE
-}
-
-function isStartOrEndLine(content: string) {
-  return /^---\s*$/.test(content);
-}
-
-function isWhitespaceLine(content: string) {
-  return /^\s*$/.test(content);
-}
-// [xxxx,yyyy,zzzz] => ['xxxx','yyyy','zzzz']
-function arrayString(content: string) {
-  if (content[0] === '[') {
-    content = content.substring(1);
-  }
-  if (content[content.length - 1] === ']') {
-    content = content.substring(0, content.length - 1);
-  }
-  return content.split(',').map(value => value.trim());
-}
-function isKeyOf<T, K = keyof T>(key: string | K): key is K {
-  return POST_METADATA_KEYS.indexOf(key as string) !== -1;
-}
-
 /**
- *
- * @param path
- * @param relativePath
- *
  * 收集单个文章的元数据
  * 不使用 readFileSync 一次性读取整个文件，仅读取需要的部分
  * 如果文件规模很大可以极高的提高性能
  * 异步读取极大提高生成效率
+ *
+ * @param path
+ * @param relativePath
  */
-export default function getPostMetadata(path: string, relativePath: string) {
+export function collectPostMetadata(path: string, relativePath: string) {
   const meta: Partial<PostMetadata> = {};
   const defer = deferred<PostMetadata>();
   const read = createInterface({
@@ -150,4 +113,65 @@ export default function getPostMetadata(path: string, relativePath: string) {
   });
 
   return defer.promise;
+}
+
+export async function collectAllPostMetadata() {
+  const postPaths = readdirSync(postDir)
+    .filter(path => extname(path).toLowerCase() === '.md');
+
+  console.log(cyan(`in dir "${postDir}", ${postPaths.length} post find.`));
+
+  const posts: PostMetadata[] = (await Promise.all(
+    postPaths.map(path =>
+      collectPostMetadata(resolvePostPath(path), join(config.postDir , path))
+    )
+  )).sort((a, b) => +new Date(b.date) - +new Date(a.date));
+
+  return posts;
+}
+
+export default {
+  collectPostMetadata,
+  collectAllPostMetadata
+};
+
+const POST_METADATA_KEYS = [
+  'title',
+  'description',
+  'date',
+  'tags',
+  'categories',
+  'cover'
+];
+
+const POST_PREVIEW_LEN = 260;
+
+const enum READ_STATUS {
+  WAIT_START,
+  READ_META,
+  READ_CONTENT,
+  DONE
+}
+
+function isStartOrEndLine(content: string) {
+  return /^---\s*$/.test(content);
+}
+
+function isWhitespaceLine(content: string) {
+  return /^\s*$/.test(content);
+}
+
+// [xxxx,yyyy,zzzz] => ['xxxx','yyyy','zzzz']
+function arrayString(content: string) {
+  if (content[0] === '[') {
+    content = content.substring(1);
+  }
+  if (content[content.length - 1] === ']') {
+    content = content.substring(0, content.length - 1);
+  }
+  return content.split(',').map(value => value.trim());
+}
+
+function isKeyOf<T, K = keyof T>(key: string | K): key is K {
+  return POST_METADATA_KEYS.indexOf(key as string) !== -1;
 }

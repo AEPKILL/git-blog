@@ -1,10 +1,9 @@
-import { green } from 'cli-color';
+import { green, red } from 'cli-color';
 import { Command, command, metadata } from 'clime';
-import { join } from 'path';
-import addTagsFiles from '../utils/add-tags-files';
-import getBlogConfig from '../utils/blog-config';
-import collectPostsMetadata from '../utils/posts-metadata';
-import { Updater } from '../utils/updater';
+import addPostFiles from '../plugins/add-post-files';
+import addTagsAndCategoriesFiles from '../plugins/add-tags-and-categories-files';
+import { collectAllPostMetadata } from '../utils/post';
+import Updater from '../utils/updater';
 
 @command({
   description: 'Update blog info.'
@@ -12,16 +11,19 @@ import { Updater } from '../utils/updater';
 export default class extends Command {
   @metadata
   async execute() {
-    const config = getBlogConfig();
-    const updater = new Updater(config);
-    const postsMetadata = await collectPostsMetadata(config);
-    updater.htmlAdditions.POST_INFO = {
-      count: postsMetadata.length,
-      path: join(config.metaDir!, config.postDir!)
-    };
-    updater.pages[config.postDir!] = postsMetadata;
-    addTagsFiles(postsMetadata, updater);
-    updater.emitFile();
-    return green(`update blog success`);
+    try {
+      await updateBlogMeta();
+      return green(`update blog success`);
+    } catch (e) {
+      return red(`update failed: ${e.message}`);
+    }
   }
+}
+
+export async function updateBlogMeta() {
+  const updater = new Updater();
+  const postsMetadata = await collectAllPostMetadata();
+  addPostFiles(postsMetadata, updater);
+  addTagsAndCategoriesFiles(postsMetadata, updater);
+  updater.emitFile();
 }
