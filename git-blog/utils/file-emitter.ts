@@ -7,7 +7,16 @@ import { resolveMetaPath, resolveWorkPath } from './workspace';
 
 const SCRIPT_ID = 'GIT-BLOG-OBJECT-INJECT-SCRIPT';
 
-export default class Updater {
+/**
+ * 一个文件元数据文件更新器
+ * 把 htmlAdditions 上的数据注入到 config.injectHTML 配置的 HTML 文件中
+ * 把 pages 上的数据写入 meta 文件夹中
+ * 这两个属性和 webpack 插件的 compilation.assets 差不多
+ *
+ * @export
+ * @class Updater
+ */
+export default class FileEmitter {
   // tslint:disable-next-line:no-any
   htmlAdditions: { [key: string]: any } = {};
   // tslint:disable-next-line:no-any
@@ -25,7 +34,6 @@ export default class Updater {
       let currentPage = 0;
       let path = key;
       path = resolveMetaPath(path);
-      removeSync(path);
       ensureDirSync(path);
       while (currentPage * pageSize < items.length) {
         const list = items.slice(

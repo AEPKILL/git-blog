@@ -115,6 +115,12 @@ export function collectPostMetadata(path: string, relativePath: string) {
   return defer.promise;
 }
 
+/**
+ * 收集所有文章的元数据
+ *
+ * @export
+ * @returns
+ */
 export async function collectAllPostMetadata() {
   const postPaths = readdirSync(postDir)
     .filter(path => extname(path).toLowerCase() === '.md');

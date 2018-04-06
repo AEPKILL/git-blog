@@ -37,12 +37,18 @@
   },
   "dependencies": {
     "@types/cheerio": "^0.22.7",
+    "@types/chokidar": "^1.7.5",
     "@types/cli-color": "^0.3.29",
     "@types/fs-extra": "^5.0.1",
+    "@types/http-server": "^0.10.0",
+    "@types/opener": "^1.4.0",
     "cheerio": "^1.0.0-rc.2",
+    "chokidar": "^2.0.3",
     "cli-color": "^1.2.0",
     "clime": "^0.5.9",
     "deferred-factory": "^1.0.2",
-    "fs-extra": "^5.0.0"
+    "fs-extra": "^5.0.0",
+    "opener": "^1.4.3",
+    "portfinder": "^1.0.13"
   }
 }

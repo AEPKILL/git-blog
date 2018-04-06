@@ -1,29 +1,29 @@
-import { green, red } from 'cli-color';
-import { Command, command, metadata } from 'clime';
-import addPostFiles from '../plugins/add-post-files';
-import addTagsAndCategoriesFiles from '../plugins/add-tags-and-categories-files';
-import { collectAllPostMetadata } from '../utils/post';
-import Updater from '../utils/updater';
+import { Command, command, metadata, option, Options } from 'clime';
+import Updater from '../updater';
 
+export class UpdateOptions extends Options {
+  @option<boolean>({
+    flag: 'w',
+    description: `watch post files and trigger re-update on changes.`,
+    required: false,
+    toggle: true,
+    default: false
+  })
+  readonly watch!: boolean;
+}
+
+// tslint:disable-next-line:max-classes-per-file
 @command({
-  description: 'Update blog info.'
+  description: 'update blog info.'
 })
 export default class extends Command {
   @metadata
-  async execute() {
-    try {
-      await updateBlogMeta();
-      return green(`update blog success`);
-    } catch (e) {
-      return red(`update failed: ${e.message}`);
+  async execute(options: UpdateOptions) {
+    const updater = new Updater();
+    await updater.update();
+    if (options.watch) {
+      updater.watch();
+      console.log(`Hit CTRL-C to stop watch.`);
     }
   }
-}
-
-export async function updateBlogMeta() {
-  const updater = new Updater();
-  const postsMetadata = await collectAllPostMetadata();
-  addPostFiles(postsMetadata, updater);
-  addTagsAndCategoriesFiles(postsMetadata, updater);
-  updater.emitFile();
 }
