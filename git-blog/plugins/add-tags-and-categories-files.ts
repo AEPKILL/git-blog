@@ -40,15 +40,18 @@ export default function addTagsFiles(
       }
     }
   }
+
   const tagKeys = [...tagsInfo.keys()];
   const categoriesKeys = [...categoriesInfo.keys()];
 
   emiter.htmlAdditions.TAGS_INFO = tagKeys.map(key => ({
     name: key,
-    path: tagsInfo.get(key)
+    path: tagsInfo.get(key),
+    count: (emiter.pages[join(tagsDirName, key)] || []).length
   }));
   emiter.htmlAdditions.CATEGORIES_INFO = categoriesKeys.map(key => ({
     name: key,
-    path: categoriesInfo.get(key)
+    path: categoriesInfo.get(key),
+    count: (emiter.pages[join(categoriesDirName, key)] || []).length
   }));
 }

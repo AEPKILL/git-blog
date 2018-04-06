@@ -1,5 +1,4 @@
 {
   "title": "AEPKILL",
-  "rootDir": "public",
-  "postDir": "post"
+  "rootDir": "public"
 }

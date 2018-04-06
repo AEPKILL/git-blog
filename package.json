@@ -2,13 +2,13 @@
   "name": "git-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "bin/git-blog.js",
+  "main": "bin/index.js",
   "bin": {
     "blog": "bin/cli.js"
   },
   "files": [
-    ".bin",
-    "dist"
+    "bin",
+    "theme"
   ],
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack/webpack.config.dev.ts",

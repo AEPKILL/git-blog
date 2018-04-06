@@ -4,6 +4,7 @@ import { removeSync } from 'fs-extra';
 import { createInterface } from 'readline';
 import addPostFiles from './plugins/add-post-files';
 import addTagsAndCategoriesFiles from './plugins/add-tags-and-categories-files';
+import config from './utils/blog-config';
 import FileEmitter from './utils/file-emitter';
 import { collectAllPostMetadata } from './utils/post';
 import workspace from './utils/workspace';
@@ -16,7 +17,7 @@ export default class Updater {
     try {
       const fileEmitter = new FileEmitter();
       const postsMetadata = await collectAllPostMetadata();
-
+      fileEmitter.htmlAdditions.BLOG_INFO = config;
       // 清空整个 Meta 目录
       removeSync(workspace.metaDir);
       addPostFiles(postsMetadata, fileEmitter);
@@ -27,26 +28,8 @@ export default class Updater {
       console.log(red(`update blog failed: ${e.message}.`));
     }
   }
-  async onFileChange(path: string) {
-    this.needUpdate = true;
-    console.log(cyan(`\nfile"${path}" changed;`));
-    if (this.updating) {
-      console.log(yellow(`update pending, wait the last update done.`));
-      return;
-    }
-    this.updating = true;
-    while (this.needUpdate) {
-      this.needUpdate = false;
-      await this.update();
-    }
-    this.updating = false;
-  }
-  onWatchStoped() {
-    console.log(red('watching stoped.'));
-    process.exit();
-  }
   watch() {
-    console.log(cyan(`watching files changes: ${workspace.postDir}.`));
+    console.log(cyan(`watching dir files change: "${workspace.postDir}".`));
     chokidar
       .watch(workspace.postDir, { ignoreInitial: true })
       .on('all', (_event, path: string) => {
@@ -64,5 +47,24 @@ export default class Updater {
         process.emit('SIGINT');
       });
     }
+  }
+
+  private async onFileChange(path: string) {
+    this.needUpdate = true;
+    console.log(cyan(`\nfile"${path}" changed;`));
+    if (this.updating) {
+      console.log(yellow(`update pending, wait the last update done.`));
+      return;
+    }
+    this.updating = true;
+    while (this.needUpdate) {
+      this.needUpdate = false;
+      await this.update();
+    }
+    this.updating = false;
+  }
+  private onWatchStoped() {
+    console.log(red('watching stoped.'));
+    process.exit();
   }
 }

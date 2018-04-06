@@ -10,6 +10,7 @@ export default function addPostFiles(
 ) {
   const { config } = emiter;
   emiter.htmlAdditions.POST_INFO = {
+    name: 'post',
     count: posts.length,
     path: join(config.metaDir, postDirName)
   };

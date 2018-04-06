@@ -32,29 +32,7 @@ function logger(req: IncomingMessage, _res: ServerResponse, error: Error) {
 }
 
 export default class Server {
-  updater = new Updater();
-  async onFileChange(path: string) {
-    console.log(yellow(`\nfile changed: ${path}.`));
-    console.log(cyan(`start update blog info.`));
-  }
-  onServerStart(port: number) {
-    const ifaces = networkInterfaces();
-    opener(`http://localhost:${port}`);
-    console.log(yellow(`Available on:`));
-    for (const key of Object.keys(ifaces)) {
-      for (const details of ifaces[key]) {
-        if (details.family === 'IPv4') {
-          console.log(`   http://${details.address}:${port}`);
-        }
-      }
-    }
-    this.updater.watch();
-    console.log(`Hit CTRL-C to stop the server`);
-  }
-  onServerStoped() {
-    console.log(red('server close'));
-    process.exit();
-  }
+  private updater = new Updater();
   async start() {
     const server = createServer({
       root: config.rootDir,
@@ -86,5 +64,24 @@ export default class Server {
         process.emit('SIGINT');
       });
     }
+  }
+
+  private onServerStart(port: number) {
+    const ifaces = networkInterfaces();
+    opener(`http://localhost:${port}`);
+    console.log(yellow(`Available on:`));
+    for (const key of Object.keys(ifaces)) {
+      for (const details of ifaces[key]) {
+        if (details.family === 'IPv4') {
+          console.log(`   http://${details.address}:${port}`);
+        }
+      }
+    }
+    this.updater.watch();
+    console.log(`Hit CTRL-C to stop the server.`);
+  }
+  private onServerStoped() {
+    console.log(red('server closed.'));
+    process.exit();
   }
 }
