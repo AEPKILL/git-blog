@@ -51,7 +51,7 @@ export default class Updater {
 
   private async onFileChange(path: string) {
     this.needUpdate = true;
-    console.log(cyan(`\nfile"${path}" changed;`));
+    console.log(cyan(`\nfile "${path}" changed;`));
     if (this.updating) {
       console.log(yellow(`update pending, wait the last update done.`));
       return;

@@ -13,6 +13,7 @@ export interface BlogInfo<T = any> {
   rootDir: string;
   theme: string;
   htmlInject: string[];
+  publicPath: string;
   extra?: T;
 }
 
@@ -30,6 +31,7 @@ const defaultConfig: BlogInfo = {
   postDir: 'post',
   metaDir: 'meta',
   theme: 'default',
+  publicPath: '',
   htmlInject: ['404.html', 'index.html']
 };
 

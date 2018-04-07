@@ -2,10 +2,11 @@
 /.awcache/
 bin/
 theme/
+dist/
 .vscode/
 .ref/
-public/meta/
-public/post/
+src/assets/meta/
+src/assets/post/
 
 package-lock.json
 *.log
