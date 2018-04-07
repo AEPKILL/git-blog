@@ -7,6 +7,8 @@ dist/
 .ref/
 src/assets/meta/
 src/assets/post/
+src/assets/git-blog.db
+playground/
 
 package-lock.json
 *.log

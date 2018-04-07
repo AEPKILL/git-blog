@@ -1,4 +1,4 @@
-import { BlogInfo } from './utils/blog-config';
+import { BlogConfig } from './utils/blog-config';
 
 declare global {
   interface PagesMetaPath {
@@ -25,7 +25,7 @@ declare global {
     tags?: string[];
   }
   const GIT_BLOG: {
-    BLOG_INFO: BlogInfo;
+    BLOG_INFO: BlogConfig;
     POST_INFO: PagesMetaPath;
     TAGS_INFO: PagesMetaPath[];
     CATEGORIES_INFO: PagesMetaPath[];

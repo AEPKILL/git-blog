@@ -6,7 +6,7 @@ import { networkInterfaces } from 'os';
 import { getPortPromise } from 'portfinder';
 import { createInterface } from 'readline';
 import Updater from './updater';
-import config from './utils/blog-config';
+import { getConfig } from './utils/blog-config';
 import workspace from './utils/workspace';
 
 function logger(req: IncomingMessage, _res: ServerResponse, error: Error) {
@@ -34,6 +34,7 @@ function logger(req: IncomingMessage, _res: ServerResponse, error: Error) {
 export default class Server {
   private updater = new Updater();
   async start() {
+    const config = getConfig();
     const server = createServer({
       root: config.rootDir,
       logFn: logger
@@ -47,7 +48,7 @@ export default class Server {
       return;
     }
 
-    console.log(green(`public dir: ${workspace.workspaceDir}`));
+    console.log(green(`public dir: ${workspace.getWorkspaceDir()}`));
 
     server.listen(port, () => {
       this.onServerStart(port);

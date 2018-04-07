@@ -1,3 +1,4 @@
+import { red } from 'cli-color';
 import { Command, command, metadata } from 'clime';
 import Server from '../server';
 
@@ -7,6 +8,6 @@ import Server from '../server';
 export default class extends Command {
   @metadata
   execute() {
-    new Server().start();
+    return new Server().start().catch(e => red(e.message));
   }
 }

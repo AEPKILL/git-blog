@@ -1,8 +1,8 @@
-import { existsSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { readJSONSync } from 'fs-extra';
+import { configFileNames, getConfigFilePath } from './config-file-path';
 
 // tslint:disable-next-line:no-any
-export interface BlogInfo<T = any> {
+export interface BlogConfig<T = any> {
   title: string;
   pageSize: number;
   description: string;
@@ -12,16 +12,15 @@ export interface BlogInfo<T = any> {
   metaDir: string;
   rootDir: string;
   theme: string;
-  htmlInject: string[];
   publicPath: string;
+  htmlInject: string[];
+  keep: string[];
   extra?: T;
 }
 
-export type UserBlogConfig<T> = Partial<BlogInfo<T>>;
+export type UserBlogConfig<T> = Partial<BlogConfig<T>>;
 
-const configFileNames = ['.git-blog', 'git-blog.json'];
-
-const defaultConfig: BlogInfo = {
+const defaultConfig: BlogConfig = {
   title: 'GIT-BLOG',
   pageSize: 10,
   description: 'a fast, simple static blog framework.',
@@ -30,28 +29,39 @@ const defaultConfig: BlogInfo = {
   rootDir: '.',
   postDir: 'post',
   metaDir: 'meta',
-  theme: 'default',
+  theme: 'git-blog',
   publicPath: '',
-  htmlInject: ['404.html', 'index.html']
+  htmlInject: ['404.html', 'index.html'],
+  keep: []
 };
 
-const workDir = process.cwd();
-const configPaths = configFileNames.map(name => join(workDir, name));
-const existsConfigPaths = configPaths.filter(path => existsSync(path));
-const configPath = existsConfigPaths[0];
-let userConfig: BlogInfo;
+let config!: BlogConfig;
 
-if (existsConfigPaths.length) {
-  userConfig = JSON.parse(readFileSync(configPath).toString()) as BlogInfo;
-} else {
-  throw new Error(
-    `Can't load GIT-BLOG config file: ${configPaths.join(' , ')}.`
-  );
+export function getConfig() {
+  if (config) {
+    return config;
+  }
+  const configFilePath = getConfigFilePath();
+
+  if (!configFilePath) {
+    throw new Error(
+      `Can't find GIT-BLOG config file: ${configFileNames.join(' , ')}.`
+    );
+  }
+  const userConfig: BlogConfig = readJSONSync(configFilePath);
+
+  config = {
+    ...defaultConfig,
+    ...userConfig
+  };
+
+  if (config.keep.indexOf(config.postDir) === -1) {
+    config.keep.push(config.postDir);
+  }
+  config.theme = config.theme.trim();
+  return config;
 }
 
-const config = {
-  ...defaultConfig,
-  ...userConfig
+export default {
+  getConfig
 };
-
-export default config;

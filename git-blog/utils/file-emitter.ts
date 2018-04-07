@@ -5,8 +5,8 @@ import { yellow } from 'cli-color';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { ensureDirSync, writeJSONSync } from 'fs-extra';
 import { join } from 'path';
-import config from './blog-config';
-import { resolveMetaPath, resolveWorkPath } from './workspace';
+import { BlogConfig, getConfig } from './blog-config';
+import workspace from './workspace';
 
 const SCRIPT_ID = 'GIT-BLOG-OBJECT-INJECT-SCRIPT';
 const comment = `/**${[
@@ -29,7 +29,7 @@ export default class FileEmitter {
   htmlAdditions: { [key: string]: any } = {};
   // tslint:disable-next-line:no-any
   pages: { [key: string]: any[] } = {};
-  config = config;
+  config: BlogConfig = getConfig();
 
   emitFile() {
     this.generatePagesMetaFiles();
@@ -37,12 +37,12 @@ export default class FileEmitter {
   }
 
   private generatePagesMetaFiles() {
-    const pageSize = config.pageSize;
+    const pageSize = this.config.pageSize;
     for (const key of Object.keys(this.pages)) {
       const items = this.pages[key];
       let currentPage = 0;
       let path = key;
-      path = resolveMetaPath(path);
+      path = workspace.resolveMetaPath(path);
       ensureDirSync(path);
       while (currentPage * pageSize < items.length) {
         const list = items.slice(
@@ -66,8 +66,8 @@ export default class FileEmitter {
   }
   private injectDataToHtml() {
     const data = this.htmlAdditions;
-    for (const file of config.htmlInject) {
-      const path = resolveWorkPath(file);
+    for (const file of this.config.htmlInject) {
+      const path = workspace.resolveWorkPath(file);
       if (!existsSync(path)) {
         console.log(yellow(`html file not exists: "${path}".`));
         continue;
@@ -77,7 +77,7 @@ export default class FileEmitter {
       const $ = cheerio.load(content);
 
       $(`#${SCRIPT_ID}`).remove();
-      $('title').text(config.title);
+      $('title').text(this.config.title);
       $('head').append(`<script id="${SCRIPT_ID}">\n${script}\n</script>`);
       writeFileSync(path, $.html());
     }

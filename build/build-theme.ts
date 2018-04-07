@@ -1,4 +1,5 @@
-import { copySync, removeSync } from 'fs-extra';
+import { existsSync } from 'fs';
+import { copySync, emptyDirSync } from 'fs-extra';
 import { normalize, resolve } from 'path';
 
 function inDir(dir: string, test: string) {
@@ -6,7 +7,9 @@ function inDir(dir: string, test: string) {
 }
 
 function buildTheme() {
-  removeSync('./theme');
+  if (existsSync('./theme')) {
+    emptyDirSync('./theme');
+  }
 
   copySync('./dist', './theme', {
     filter(src: string) {
@@ -18,7 +21,6 @@ function buildTheme() {
   });
 
   copySync('./src/assets/post', './theme/post');
-  copySync('./src/git-blog.json', './theme/git-blog.json');
 }
 
 buildTheme();

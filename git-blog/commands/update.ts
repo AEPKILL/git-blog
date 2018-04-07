@@ -10,6 +10,14 @@ export class UpdateOptions extends Options {
     default: false
   })
   readonly watch!: boolean;
+  @option<boolean>({
+    flag: 't',
+    description: `update theme.`,
+    required: false,
+    toggle: true,
+    default: false
+  })
+  readonly theme!: boolean;
 }
 
 // tslint:disable-next-line:max-classes-per-file
@@ -20,6 +28,9 @@ export default class extends Command {
   @metadata
   async execute(options: UpdateOptions) {
     const updater = new Updater();
+    if (options.theme) {
+      updater.updateTheme();
+    }
     await updater.update();
     if (options.watch) {
       updater.watch();

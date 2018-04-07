@@ -6,7 +6,7 @@ import baseConfig from './webpack.config.base';
 const config: Configuration = {
   mode: 'production',
   devtool: false,
-  plugins: [new cleanPlugin(['theme/**/*'], { root: baseConfig.context })]
+  plugins: [new cleanPlugin(['dist/**/*'], { root: baseConfig.context })]
 };
 
 export default merge({}, baseConfig, config);

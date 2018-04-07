@@ -3,8 +3,8 @@ import { deferred } from 'deferred-factory';
 import { createReadStream, readdirSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
 import { createInterface } from 'readline';
-import config from './blog-config';
-import { postDir, resolvePostPath } from './workspace';
+import { getConfig } from './blog-config';
+import workspace from './workspace';
 
 export interface PostMetadata {
   title: string;
@@ -14,6 +14,7 @@ export interface PostMetadata {
   tags: string[];
   categories?: string;
   cover?: string;
+  autor?: string;
 }
 
 /**
@@ -122,16 +123,23 @@ export function collectPostMetadata(path: string, relativePath: string) {
  * @returns
  */
 export async function collectAllPostMetadata() {
-  const postPaths = readdirSync(postDir)
-    .filter(path => extname(path).toLowerCase() === '.md');
-
-  console.log(cyan(`in dir "${postDir}", ${postPaths.length} post find.`));
+  const postPaths = readdirSync(workspace.getPostDir()).filter(
+    path => extname(path).toLowerCase() === '.md'
+  );
+  const config = getConfig();
 
   const posts: PostMetadata[] = (await Promise.all(
     postPaths.map(path =>
-      collectPostMetadata(resolvePostPath(path), join(config.postDir , path))
+      collectPostMetadata(
+        workspace.resolvePostPath(path),
+        join(config.postDir, path)
+      )
     )
   )).sort((a, b) => +new Date(b.date) - +new Date(a.date));
+
+  console.log(
+    cyan(`in dir "${workspace.getPostDir()}", ${postPaths.length} post find.`)
+  );
 
   return posts;
 }
@@ -147,7 +155,8 @@ const POST_METADATA_KEYS = [
   'date',
   'tags',
   'categories',
-  'cover'
+  'cover',
+  'autor'
 ];
 
 const POST_PREVIEW_LEN = 260;
@@ -175,7 +184,10 @@ function arrayString(content: string) {
   if (content[content.length - 1] === ']') {
     content = content.substring(0, content.length - 1);
   }
-  return content.split(',').map(value => value.trim());
+  return content
+    .split(',')
+    .map(value => value.trim())
+    .filter(value => value.length);
 }
 
 function isKeyOf<T, K = keyof T>(key: string | K): key is K {

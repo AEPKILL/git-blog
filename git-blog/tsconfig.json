@@ -1,4 +1,5 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../bin/",
     "module": "commonjs",
@@ -6,5 +7,8 @@
     "sourceMap": true,
     "declaration": true
   },
-  "extends": "../tsconfig.base.json"
+  "include": [
+    "./**/*.ts",
+    "./**/*.json"
+  ]
 }

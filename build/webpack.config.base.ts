@@ -47,7 +47,7 @@ const baseConfig: Configuration = {
         from: './src/assets',
         to: 'assets',
         toType: 'dir',
-        ignore: ['index.html', '404.html']
+        ignore: ['index.html']
       }
     ]),
     new htmlPlugin({
