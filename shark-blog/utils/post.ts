@@ -1,9 +1,10 @@
 import { cyan } from 'cli-color';
 import { deferred } from 'deferred-factory';
-import { createReadStream, readdirSync, statSync } from 'fs';
-import { basename, extname, join } from 'path';
+import { createReadStream, statSync } from 'fs';
+import { basename, join } from 'path';
 import { createInterface } from 'readline';
 import { getConfig } from './blog-config';
+import { readDirFiles } from './read-dir';
 import workspace from './workspace';
 
 export interface PostMetadata {
@@ -123,9 +124,7 @@ export function collectPostMetadata(path: string, relativePath: string) {
  * @returns
  */
 export async function collectAllPostMetadata() {
-  const postPaths = readdirSync(workspace.getPostDir()).filter(
-    path => extname(path).toLowerCase() === '.md'
-  );
+  const postPaths = readDirFiles(workspace.getPostDir());
   const config = getConfig();
 
   const posts: PostMetadata[] = (await Promise.all(
