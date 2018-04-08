@@ -24,9 +24,9 @@ export default class Updater {
       addPostFiles(postsMetadata, fileEmitter);
       addTagsAndCategoriesFiles(postsMetadata, fileEmitter);
       fileEmitter.emitFile();
-      console.log(green(`update blog success.`));
+      console.log(green(`update blog metadata success.`));
     } catch (e) {
-      console.log(red(`update blog failed: ${e.message}.`));
+      console.log(red(`update blog metadata failed: ${e.message}.`));
     }
   }
   updateTheme() {

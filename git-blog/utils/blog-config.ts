@@ -20,7 +20,7 @@ export interface BlogConfig<T = any> {
 
 export type UserBlogConfig<T> = Partial<BlogConfig<T>>;
 
-const defaultConfig: BlogConfig = {
+export const defaultConfig: BlogConfig = {
   title: 'GIT-BLOG',
   pageSize: 10,
   description: 'a fast, simple static blog framework.',

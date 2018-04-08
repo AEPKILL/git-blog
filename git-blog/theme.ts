@@ -8,7 +8,6 @@ import { blogDb } from './utils/blog-db';
 import workspace from './utils/workspace';
 
 export interface ThemeDetail {
-  themePackage?: string;
   root: string;
   version: string;
   filelist: string[];
@@ -17,21 +16,22 @@ export interface ThemeDetail {
 export class Theme {
   config: BlogConfig = getConfig();
   update() {
-    const themePackage = this.config.theme;
-    const lastTheme = blogDb.get<ThemeDetail>('theme');
-    if (themePackage === '--NONE--') {
+    const themeName = this.config.theme;
+    const lastTheme = blogDb.get<ThemeDetail & { name: string }>('theme');
+
+    if (themeName === '--NONE--') {
       console.log(yellow(`WARN: YOU SET DOT'T UPDATE THEME`));
       return;
     }
-    const themeDetail = loadThemePackage(themePackage);
-    if (!themeDetail) {
-      console.log(red(`can't load theme: ${themePackage}`));
+    const currentTheme = loadTheme(themeName);
+    if (!currentTheme) {
+      console.log(red(`can't load theme: ${themeName}`));
       return;
     }
     if (lastTheme) {
       if (
-        lastTheme.themePackage === themePackage &&
-        lastTheme.version === themeDetail.version
+        lastTheme.name === themeName &&
+        lastTheme.version === currentTheme.version
       ) {
         // don't need update
         return;
@@ -47,18 +47,16 @@ export class Theme {
       }
     }
     console.log(cyan(`update theme ...`));
-    for (const file of themeDetail.filelist) {
-      const src = resolve(themeDetail.root, file);
-      const dest = resolve(workspace.getWorkspaceDir(), file);
+    for (const file of currentTheme.filelist) {
+      const src = resolve(currentTheme.root, file);
+      const dest = workspace.resolveWorkPath(file);
       copySync(src, dest);
       console.log(`${src} => ${dest}`);
     }
-    console.log(
-      green(`current theme: ${themePackage}(${themeDetail.version})`)
-    );
+    console.log(green(`current theme: ${themeName}(${currentTheme.version})`));
     blogDb.set('theme', {
-      themePackage,
-      ...themeDetail
+      name: themeName,
+      ...currentTheme
     });
   }
 }
@@ -67,26 +65,26 @@ export default {
   Theme
 };
 
-function loadThemePackage(themePackage: string): ThemeDetail | undefined {
+function loadTheme(themeName: string): ThemeDetail | undefined {
   let themeDetail!: ThemeDetail;
   const themePackagePaths = [
     // current dir modules
-    themePackage,
+    themeName,
     // global npm modules
     resolve(
       execSync('npm root -g')
         .toString()
         .trim(),
-      themePackage
+      themeName
     ),
     // reltive path of current dir
-    resolve(workspace.workDir, themePackage)
+    resolve(workspace.workDir, themeName)
   ];
 
   for (const packagePath of themePackagePaths) {
     try {
       themeDetail = require(packagePath).default;
-      const checkResult = checkThemePackage(themeDetail);
+      const checkResult = checkTheme(themeDetail);
       if (checkResult.ok) {
         return themeDetail;
       } else {
@@ -100,45 +98,45 @@ function loadThemePackage(themePackage: string): ThemeDetail | undefined {
   return;
 }
 
-function checkThemePackage(themePackage: ThemeDetail) {
-  if (!themePackage) {
+function checkTheme(theme: ThemeDetail) {
+  if (!theme) {
     return {
       ok: false,
       message: `theme not found.`
     };
   }
-  if (typeof themePackage.root !== 'string') {
+  if (typeof theme.root !== 'string') {
     return {
       ok: false,
       message: `theme package error: 'root' field not a string.`
     };
   }
-  if (!existsSync(themePackage.root)) {
+  if (!existsSync(theme.root)) {
     return {
       ok: false,
       message: `theme package error: 'root' field not exists.`
     };
   }
-  if (!statSync(themePackage.root).isDirectory()) {
+  if (!statSync(theme.root).isDirectory()) {
     return {
       ok: false,
       message: `theme package error: 'root' field not a dir.`
     };
   }
-  if (typeof themePackage.version !== 'string') {
+  if (typeof theme.version !== 'string') {
     return {
       ok: false,
       message: `theme package error: 'verison' field not a string.`
     };
   }
-  if (!Array.isArray(themePackage.filelist)) {
+  if (!Array.isArray(theme.filelist)) {
     return {
       ok: false,
       message: `theme package error: 'filelist' field not a array.`
     };
   }
-  for (const file of themePackage.filelist) {
-    const fullpath = resolve(themePackage.root, file);
+  for (const file of theme.filelist) {
+    const fullpath = resolve(theme.root, file);
     if (!existsSync(fullpath)) {
       return {
         ok: false,
@@ -148,7 +146,7 @@ function checkThemePackage(themePackage: ThemeDetail) {
     if (!statSync(fullpath).isFile()) {
       return {
         ok: false,
-        message: `theme package error: root field not a file.`
+        message: `theme package error: path "${fullpath}" not a file.`
       };
     }
   }

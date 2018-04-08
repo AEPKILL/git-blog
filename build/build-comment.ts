@@ -1,7 +1,7 @@
 export const buildComment = [
   '',
   '',
-  `GIT-BLOG-DEFAULT-THEME`,
+  `theme: GIT-BLOG`,
   `data: ${new Date().toLocaleString()}`,
   `author: AEPKILL`,
   `version: ${process.env.npm_package_version}`,
