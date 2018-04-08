@@ -3,7 +3,7 @@ import { readJSONSync, writeJSONSync } from 'fs-extra';
 import workspace from './workspace';
 
 function getBDFilePath() {
-  return workspace.resolveWorkPath('git-blog.db.json');
+  return workspace.resolveWorkPath('shark-blog.db.json');
 }
 
 export default {

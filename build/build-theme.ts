@@ -1,5 +1,5 @@
 import { existsSync } from 'fs';
-import { copySync, emptyDirSync } from 'fs-extra';
+import { copySync, emptyDirSync, ensureDirSync } from 'fs-extra';
 import { normalize, resolve } from 'path';
 
 function inDir(dir: string, test: string) {
@@ -20,6 +20,7 @@ function buildTheme() {
     }
   });
 
+  ensureDirSync('./src/assets/post');
   copySync('./src/assets/post', './theme/post');
 }
 

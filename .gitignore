@@ -7,7 +7,7 @@ dist/
 .ref/
 src/assets/meta/
 src/assets/post/
-src/assets/git-blog.db
+src/assets/shark-blog.db
 playground/
 
 package-lock.json

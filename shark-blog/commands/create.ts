@@ -24,7 +24,7 @@ export default class extends Command {
     console.log(cyan(`working...`));
     try {
       ensureDirSync(fullPath);
-      writeJSONSync(resolve(fullPath, 'git-blog.json'), defaultConfig, {
+      writeJSONSync(resolve(fullPath, 'shark-blog.json'), defaultConfig, {
         spaces: 2
       });
       execSync(`cd ${name}&&blog update --theme&&blog update`);

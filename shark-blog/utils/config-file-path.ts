@@ -1,7 +1,7 @@
 import { existsSync } from 'fs-extra';
 import { join } from 'path';
 
-export const configFileNames = ['.git-blog', 'git-blog.json'];
+export const configFileNames = ['.shark-blog', 'shark-blog.json'];
 
 export function getConfigFilePath() {
   const workDir = process.cwd();

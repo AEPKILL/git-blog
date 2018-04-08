@@ -20,7 +20,7 @@ export interface BlogConfig<T = any> {
 export type UserBlogConfig<T> = Partial<BlogConfig<T>>;
 
 export const defaultConfig: BlogConfig = {
-  title: 'GIT-BLOG',
+  title: 'SHARK-BLOG',
   pageSize: 10,
   description: 'a fast, simple static blog framework.',
   author: 'AEPKILL',
@@ -28,7 +28,7 @@ export const defaultConfig: BlogConfig = {
   rootDir: '.',
   postDir: 'post',
   metaDir: 'meta',
-  theme: 'git-blog',
+  theme: 'shark-blog',
   publicPath: '',
   htmlInject: ['404.html', 'index.html']
 };
@@ -43,7 +43,7 @@ export function getConfig() {
 
   if (!configFilePath) {
     throw new Error(
-      `Can't find GIT-BLOG config file: ${configFileNames.join(' , ')}.`
+      `Can't find blog config file: ${configFileNames.join(' , ')}.`
     );
   }
   const userConfig: BlogConfig = readJSONSync(configFilePath);
