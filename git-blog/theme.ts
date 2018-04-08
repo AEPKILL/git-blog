@@ -4,7 +4,7 @@ import { existsSync, statSync } from 'fs';
 import { copySync, removeSync } from 'fs-extra';
 import { resolve } from 'path';
 import { BlogConfig, getConfig } from './utils/blog-config';
-import { blogDb } from './utils/blog-db';
+import blogDb from './utils/blog-db';
 import workspace from './utils/workspace';
 
 export interface ThemeDetail {
@@ -33,15 +33,22 @@ export class Theme {
         lastTheme.name === themeName &&
         lastTheme.version === currentTheme.version
       ) {
-        // don't need update
+        console.log(cyan(`theme don't need update.`));
         return;
       } else {
+        console.log(
+          cyan(`clean theme ${lastTheme.name}(${lastTheme.version})...`)
+        );
         // clear previous theme files
         for (const file of lastTheme.filelist) {
+          const fileFullPath = workspace.resolveWorkPath(file);
           try {
-            removeSync(file);
+            removeSync(fileFullPath);
+            console.log(`delete ${fileFullPath}.`);
           } catch {
-            // nothing todo
+            console.log(
+              red(`delete ${fileFullPath} failed, please clean it manually.`)
+            );
           }
         }
       }
@@ -51,7 +58,7 @@ export class Theme {
       const src = resolve(currentTheme.root, file);
       const dest = workspace.resolveWorkPath(file);
       copySync(src, dest);
-      console.log(`${src} => ${dest}`);
+      console.log(`copy ${src} => ${dest}`);
     }
     console.log(green(`current theme: ${themeName}(${currentTheme.version})`));
     blogDb.set('theme', {

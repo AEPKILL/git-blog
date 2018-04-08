@@ -30,6 +30,7 @@ export default class extends Command {
     const updater = new Updater();
     if (options.theme) {
       updater.updateTheme();
+      return;
     }
     await updater.update();
     if (options.watch) {

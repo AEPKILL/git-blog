@@ -14,7 +14,7 @@ export interface PostMetadata {
   tags: string[];
   categories?: string;
   cover?: string;
-  autor?: string;
+  author?: string;
 }
 
 /**
@@ -156,7 +156,7 @@ const POST_METADATA_KEYS = [
   'tags',
   'categories',
   'cover',
-  'autor'
+  'author'
 ];
 
 const POST_PREVIEW_LEN = 260;

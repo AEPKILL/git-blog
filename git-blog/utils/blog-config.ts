@@ -6,7 +6,7 @@ export interface BlogConfig<T = any> {
   title: string;
   pageSize: number;
   description: string;
-  autor: string;
+  author: string;
   language: string;
   postDir: string;
   metaDir: string;
@@ -14,7 +14,6 @@ export interface BlogConfig<T = any> {
   theme: string;
   publicPath: string;
   htmlInject: string[];
-  keep: string[];
   extra?: T;
 }
 
@@ -24,15 +23,14 @@ export const defaultConfig: BlogConfig = {
   title: 'GIT-BLOG',
   pageSize: 10,
   description: 'a fast, simple static blog framework.',
-  autor: 'AEPKILL',
+  author: 'AEPKILL',
   language: 'zh-cn',
   rootDir: '.',
   postDir: 'post',
   metaDir: 'meta',
   theme: 'git-blog',
   publicPath: '',
-  htmlInject: ['404.html', 'index.html'],
-  keep: []
+  htmlInject: ['404.html', 'index.html']
 };
 
 let config!: BlogConfig;
@@ -55,9 +53,6 @@ export function getConfig() {
     ...userConfig
   };
 
-  if (config.keep.indexOf(config.postDir) === -1) {
-    config.keep.push(config.postDir);
-  }
   config.theme = config.theme.trim();
   return config;
 }

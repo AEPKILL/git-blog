@@ -6,9 +6,8 @@ function getBDFilePath() {
   return workspace.resolveWorkPath('git-blog.db.json');
 }
 
-export class BlogDB {
-  // tslint:disable-next-line:no-any
-  set(key: string, value: any) {
+export default {
+  set<T>(key: string, value: T) {
     const file = getBDFilePath();
     if (!existsSync(file)) {
       writeJSONSync(file, {});
@@ -16,7 +15,7 @@ export class BlogDB {
     const content = readJSONSync(file);
     content[key] = value;
     writeJSONSync(file, content);
-  }
+  },
   get<T>(key: string): T | undefined {
     const file = getBDFilePath();
     if (!existsSync(file)) {
@@ -25,11 +24,4 @@ export class BlogDB {
     const content = readJSONSync(file);
     return content[key];
   }
-}
-
-export const blogDb = new BlogDB();
-
-export default {
-  blogDb,
-  BlogDB
 };
