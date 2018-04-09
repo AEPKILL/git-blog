@@ -28,16 +28,12 @@ const baseConfig: Configuration = {
   module: {
     rules: [
       {
-        oneOf: [
-          {
-            test: /\.tsx?$/,
-            loader: 'awesome-typescript-loader',
-            options: {
-              useCache: true
-            },
-            exclude: /node_modules/
-          }
-        ]
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'assets/images/[name].[hash:8].[ext]'
+        }
       }
     ]
   },

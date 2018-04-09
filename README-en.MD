@@ -1,20 +1,20 @@
 # SHARK-BLOG
 
-一个简单易用的静态博客框架
+a simple & easy static blog framework
 
 >这真是一个极好的博客解决方案。  --尼古拉斯·赵四
 >
 >Wow , such a easy static blog framework.  --Isaac·Two·Dog
 
-# 安装
+# Install
 
 ```shell
 npm install shark-blog -g
 ```
 
-# 快速上手
+# Quick Start
 
-创建一个新的博客并启动一个本地服务器来预览:
+create a new blog and start a local server for preview.
 
 ```shell
 blog create my-blog

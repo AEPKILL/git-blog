@@ -14,8 +14,7 @@ function buildTheme() {
   copySync('./dist', './theme', {
     filter(src: string) {
       return (
-        !inDir(resolve(process.cwd(), 'dist/assets/meta'), src) &&
-        !inDir(resolve(process.cwd(), 'dist/assets/post'), src)
+        !inDir(resolve(process.cwd(), 'dist/assets/meta'), src)
       );
     }
   });
