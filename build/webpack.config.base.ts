@@ -60,8 +60,8 @@ const baseConfig: Configuration = {
     })
   ],
   output: {
-    filename: '[name].[hash:8].js',
-    chunkFilename: '[name].[hash:8].js',
+    filename: 'assets/js/[name].[contenthash:8].js',
+    chunkFilename: 'assets/js/[name].[contenthash:8].js',
     path: resolve(__dirname, '../dist'),
     publicPath: '/'
   }

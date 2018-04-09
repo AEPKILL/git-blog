@@ -3,6 +3,7 @@ import cleanPlugin from 'clean-webpack-plugin';
 import extractTextPlugin from 'extract-text-webpack-plugin';
 import { Configuration } from 'webpack';
 import merge from 'webpack-merge';
+import ChunkInlineHtmlPlugin from './webpack-chunk-inline-html-plugin';
 import baseConfig from './webpack.config.base';
 
 const config: Configuration = {
@@ -48,11 +49,24 @@ const config: Configuration = {
   plugins: [
     new cleanPlugin(['dist/**/*'], { root: baseConfig.context }),
     new extractTextPlugin({
-      filename: 'css/[name].[hash:8].css'
+      filename: 'assets/css/[name].[hash:8].css'
+    }),
+    new ChunkInlineHtmlPlugin({
+      inlineChunks: ['runtime']
     })
   ],
   optimization: {
-    runtimeChunk: 'single'
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendor'
+        }
+      }
+    }
   }
 };
 
