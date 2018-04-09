@@ -1,5 +1,5 @@
 import { existsSync } from 'fs';
-import { copySync, emptyDirSync, ensureDirSync } from 'fs-extra';
+import { copySync, ensureDirSync, removeSync } from 'fs-extra';
 import { normalize, resolve } from 'path';
 
 function inDir(dir: string, test: string) {
@@ -8,14 +8,12 @@ function inDir(dir: string, test: string) {
 
 function buildTheme() {
   if (existsSync('./theme')) {
-    emptyDirSync('./theme');
+    removeSync('./theme');
   }
 
   copySync('./dist', './theme', {
     filter(src: string) {
-      return (
-        !inDir(resolve(process.cwd(), 'dist/assets/meta'), src)
-      );
+      return !inDir(resolve(process.cwd(), 'dist/assets/meta'), src);
     }
   });
 

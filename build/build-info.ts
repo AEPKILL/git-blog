@@ -1,4 +1,4 @@
-export const buildComment = [
+export const buildInfo = [
   '',
   '',
   `theme: ${process.env.npm_package_name}`,
@@ -14,5 +14,5 @@ export const buildComment = [
   .join('\n');
 
 export default {
-  buildComment
+  buildInfo
 };

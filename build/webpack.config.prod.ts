@@ -52,7 +52,7 @@ const config: Configuration = {
       filename: 'assets/css/[name].[hash:8].css'
     }),
     new ChunkInlineHtmlPlugin({
-      inlineChunks: ['runtime']
+      inlineChunks: ['bootstrap', 'runtime']
     })
   ],
   optimization: {
@@ -62,11 +62,14 @@ const config: Configuration = {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
           name: 'vendor'
         }
       }
     }
+  },
+  output: {
+    filename: 'assets/js/[name].[contenthash:8].js',
+    chunkFilename: 'assets/js/[name].[contenthash:8].js'
   }
 };
 

@@ -49,7 +49,13 @@ const config: Configuration = {
       }
     ]
   },
-  devServer: {}
+  output: {
+    filename: 'assets/js/[name].[hash:8].js',
+    chunkFilename: 'assets/js/[name].[hash:8].js'
+  },
+  devServer: {
+    open: true
+  }
 };
 
 export default merge({}, baseConfig, config);

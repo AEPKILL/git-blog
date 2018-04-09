@@ -2,23 +2,11 @@ import copyPlugin from 'copy-webpack-plugin';
 import htmlPlugin from 'html-webpack-plugin';
 import { resolve } from 'path';
 import { Configuration } from 'webpack';
-import { buildComment } from './build-comment';
-
-const htmlMiniOptions = {
-  removeComments: false,
-  minifyJS: false,
-  collapseWhitespace: true,
-  removeRedundantAttributes: true,
-  useShortDoctype: true,
-  removeEmptyAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  keepClosingSlash: true,
-  minifyCSS: true,
-  minifyURLs: true
-};
+import { buildInfo } from './build-info';
 
 const baseConfig: Configuration = {
   entry: {
+    bootstrap: './src/bootstrap/index.ts',
     main: './src/index.tsx'
   },
   resolve: {
@@ -46,22 +34,28 @@ const baseConfig: Configuration = {
         ignore: ['index.html']
       }
     ]),
-    new htmlPlugin({
-      template: './src/assets/index.html',
-      filename: 'index.html',
-      minify: htmlMiniOptions,
-      buildComment
-    }),
-    new htmlPlugin({
-      template: './src/assets/index.html',
-      filename: '404.html',
-      minify: htmlMiniOptions,
-      buildComment
-    })
+    ...['index.html', '404.html'].map(
+      filename =>
+        new htmlPlugin({
+          template: './src/index.html',
+          minify: {
+            removeComments: false,
+            minifyJS: false,
+            collapseWhitespace: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyCSS: true,
+            minifyURLs: true
+          },
+          filename,
+          buildInfo
+        })
+    )
   ],
   output: {
-    filename: 'assets/js/[name].[contenthash:8].js',
-    chunkFilename: 'assets/js/[name].[contenthash:8].js',
     path: resolve(__dirname, '../dist'),
     publicPath: '/'
   }

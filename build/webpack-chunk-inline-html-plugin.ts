@@ -15,6 +15,25 @@ export default class ChunkInlineHtmlPlugin implements Plugin {
     };
   }
   apply(compiler: Compiler) {
+    let needRemoveChunks: string[] = [];
+    // 删掉已经内联注入的 chunk
+    compiler.plugin(
+      'emit',
+      ($compilation: compilation.Compilation, callback: () => void) => {
+        for (const chunk of needRemoveChunks) {
+          delete $compilation.assets[chunk];
+        }
+        callback();
+      }
+    );
+    // 情况内联依赖的 chunk
+    compiler.plugin(
+      'after-emit',
+      (_compilation: compilation.Compilation, callback: () => void) => {
+        needRemoveChunks = [];
+        callback();
+      }
+    );
     compiler.plugin('compilation', ($compilation: compilation.Compilation) => {
       $compilation.plugin(
         'html-webpack-plugin-alter-asset-tags',
@@ -36,13 +55,14 @@ export default class ChunkInlineHtmlPlugin implements Plugin {
                 tag.tagName === 'script' &&
                 tag.attributes.src === publicPath + inlineChunkPath
               ) {
-                delete tag.attributes.src;
                 tag.attributes['inline-chunk-name'] = chunkName;
                 tag.innerHTML = sourceMappingURL.removeFrom(
                   $compilation.assets[inlineChunkPath].source()
                 );
+                delete tag.attributes.src;
               }
             }
+            needRemoveChunks.push(inlineChunkPath);
           }
         }
       );
