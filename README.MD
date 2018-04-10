@@ -22,9 +22,9 @@ cd my-blog
 blog start
 ```
 
-# 设计
-[HTML5-UP](https://html5up.net/)
-[UNO-ZEN](https://github.com/Kikobeats/uno-zen)
+# 参(chao)考(xi)设计
+* [HTML5-UP](https://html5up.net/)
+* [UNO-ZEN](https://github.com/Kikobeats/uno-zen)
 
 # License
 

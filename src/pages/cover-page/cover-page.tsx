@@ -2,6 +2,7 @@
 /// <reference path="../../../bin/web-declare.d.ts" />
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import i18n from '../../i18n';
 
 import './cover-page.scss';
 
@@ -33,17 +34,17 @@ export default class CoverPage extends React.Component<{}, CoverPageState> {
                   <ul className="navigation">
                     <li className="navigation__item">
                       <Link to="/blog" className="button">
-                        首页
+                        {i18n.index}
                       </Link>
                     </li>
                     <li className="navigation__item">
                       <Link to="/about" className="button">
-                        关于
+                        {i18n.about}
                       </Link>
                     </li>
                     <li className="navigation__item">
                       <Link to="/categories" className="button">
-                        分类
+                        {i18n.tags}
                       </Link>
                     </li>
                   </ul>
