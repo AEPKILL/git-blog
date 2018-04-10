@@ -3,5 +3,5 @@
   "rootDir": "src",
   "metaDir": "assets/meta",
   "postDir": "assets/post",
-  "htmlInject": ["assets/index.html"]
+  "htmlInject": ["index.html"]
 }

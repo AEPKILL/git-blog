@@ -21,3 +21,11 @@ blog create my-blog
 cd my-blog
 blog start
 ```
+
+# 设计
+[HTML5-UP](https://html5up.net/)
+[UNO-ZEN](https://github.com/Kikobeats/uno-zen)
+
+# License
+
+MIT © [AEPKILL](mailto:a@aepkill.com)

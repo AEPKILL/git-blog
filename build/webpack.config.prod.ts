@@ -26,8 +26,7 @@ const config: Configuration = {
               loader: 'postcss-loader',
               options: {
                 ident: 'postcss',
-                parser: require('postcss-scss'),
-                plugins: () => [
+                plugins: [
                   require('postcss-flexbugs-fixes'),
                   autoprefixer({
                     browsers: [
@@ -40,7 +39,8 @@ const config: Configuration = {
                   })
                 ]
               }
-            }
+            },
+            'sass-loader'
           ]
         })
       }

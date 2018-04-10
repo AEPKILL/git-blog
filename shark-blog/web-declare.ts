@@ -24,7 +24,7 @@ declare global {
     categories?: string;
     tags?: string[];
   }
-  const GIT_BLOG: {
+  const BLOG_INFO: {
     BLOG_INFO: BlogConfig;
     POST_INFO: PagesMetaPath;
     TAGS_INFO: PagesMetaPath[];

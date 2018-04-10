@@ -30,8 +30,7 @@ const config: Configuration = {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              parser: require('postcss-scss'),
-              plugins: () => [
+              plugins: [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
                   browsers: [
@@ -44,7 +43,8 @@ const config: Configuration = {
                 })
               ]
             }
-          }
+          },
+          'sass-loader'
         ]
       }
     ]
@@ -54,7 +54,8 @@ const config: Configuration = {
     chunkFilename: 'assets/js/[name].[hash:8].js'
   },
   devServer: {
-    open: true
+    open: true,
+    historyApiFallback: true
   }
 };
 

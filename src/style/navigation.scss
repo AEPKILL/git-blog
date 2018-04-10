@@ -1,0 +1,28 @@
+nav {
+  display: inline-block;
+  position: relative;
+}
+
+.navigation {
+  position: relative;
+  margin: 0;
+  list-style-type: none;
+  float: left;
+  &__item {
+    display: inline-block;
+    margin: 3px 3px;
+    line-height: 1em;
+    a {
+      display: block;
+      position: relative;
+      border-color: #fff;
+      color: #fff;
+      opacity: 0.8;
+      &:hover {
+        color: #fff;
+        border-color: #fff;
+        opacity: 1;
+      }
+    }
+  }
+}

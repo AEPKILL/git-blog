@@ -73,7 +73,7 @@ export default class FileEmitter {
         continue;
       }
       const content = readFileSync(path).toString();
-      const script = `${comment}\nvar GIT_BLOG=${JSON.stringify(data)};`;
+      const script = `${comment}\nvar BLOG_INFO=${JSON.stringify(data)};`;
       const $ = cheerio.load(content);
 
       $(`#${SCRIPT_ID}`).remove();

@@ -1,11 +1,11 @@
-const bootstrapCss = document.getElementById('bootstrap-animation')!;
-const animationElement = document.getElementById('sky')!;
+const bootstrapStyle = document.getElementById('bootstrap-animation')!;
+const animationElement = document.getElementById('loading')!;
 
 class Bootstrap {
   animationPlaying = false;
   appLoaded = false;
   constructor() {
-    setTimeout(this.playBootstrapAnimation.bind(this), 1000);
+    setTimeout(this.playBootstrapAnimation.bind(this), 800);
   }
   playBootstrapAnimation() {
     if (!this.appLoaded) {
@@ -14,11 +14,11 @@ class Bootstrap {
     }
   }
   endBootstrapAnimation() {
-    animationElement.className = `${animationElement.className} end`;
-    setTimeout(1500, this.onBootstrapAnimationEnd.bind(this));
+    animationElement.className = `end`;
+    setTimeout(this.onBootstrapAnimationEnd.bind(this), 1100);
   }
   bootstrap() {
-    bootstrapCss.parentElement!.removeChild(bootstrapCss);
+    bootstrapStyle.parentElement!.removeChild(bootstrapStyle);
     animationElement.parentElement!.removeChild(animationElement);
     if (sharkBlog.onBootstrap) {
       sharkBlog.onBootstrap();
