@@ -1,0 +1,64 @@
+.menu-button {
+  $color: #5e5a4d;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  position: relative;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  &:active {
+    border: none;
+  }
+  &.close {
+    .middle {
+      width: 25px;
+      height: 25px;
+      top: 24%;
+      left: 27%;
+      border-radius: 50%;
+      opacity: 0;
+    }
+    .top {
+      transform: rotate(45deg);
+      top: 40%;
+      border-radius: 5px;
+    }
+    .bottom {
+      transform: rotate(-45deg);
+      top: 40%;
+      border-radius: 5px;
+    }
+    .bar {
+      background: #fff;
+    }
+  }
+  .bar {
+    width: 20px;
+    height: 2px;
+    border: 1px solid $color;
+    position: absolute;
+    border-radius: 5px;
+    background-color: $color;
+  }
+
+  .top {
+    left: 15%;
+    top: 20%;
+    transition: all 0.5s;
+  }
+
+  .middle {
+    left: 15%;
+    top: 40%;
+    transition: all 0.5s;
+  }
+
+  .bottom {
+    left: 15%;
+    top: 60%;
+    transition: all 0.5s;
+  }
+}
+

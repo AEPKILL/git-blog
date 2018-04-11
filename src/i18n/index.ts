@@ -1,13 +1,12 @@
 import langPack from './lang-pack';
 
-// tslint:disable-next-line:no-any
+// tslint:disable:no-any
+
 const lang: string = ((navigator as any).systemLanguage
-  ? // tslint:disable-next-line:no-any
-    (navigator as any).systemLanguage
+  ? (navigator as any).systemLanguage
   : navigator.language
 ).substr(0, 2);
 
-// tslint:disable-next-line:no-any
 const i18n: { [key in keyof typeof langPack]: string } = {} as any;
 
 for (const key of Object.keys(langPack)) {
@@ -21,5 +20,20 @@ for (const key of Object.keys(langPack)) {
     }
   });
 }
+
+export function coverI18n(name: string | { zh?: string; en?: string }) {
+  if (typeof name === 'string') {
+    return name;
+  }
+  if (lang == 'zh' && name.zh) {
+    return name.zh;
+  }
+  if (lang == 'en' && name.en) {
+    return name.en;
+  }
+  return '';
+}
+
+// tslint:enable:no-any
 
 export default i18n;

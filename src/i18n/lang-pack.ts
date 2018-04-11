@@ -1,7 +1,7 @@
 export default {
-  index: {
-    zh: '首页',
-    en: 'index'
+  posts: {
+    zh: '博客',
+    en: 'posts'
   },
   about: {
     zh: '关于',
@@ -9,6 +9,6 @@ export default {
   },
   tags: {
     zh: '标签',
-    en: 'categories'
+    en: 'tags'
   }
 };
