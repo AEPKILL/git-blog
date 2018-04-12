@@ -1,7 +1,7 @@
 import post from './post';
 import postList from './post-list';
 
-const stores =  {
+const stores = {
   postList,
   post
 };

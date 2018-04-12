@@ -1,8 +1,42 @@
 .post-list {
+  min-height: 200px;
+}
+.list {
   max-width: 960px;
-  margin: 0 auto;
+  margin-bottom: 4em;
   .title {
     margin: 1.5rem 0 2.7rem;
     text-align: center;
+  }
+  &__item {
+    list-style: none;
+    margin-bottom: 2.5em;
+    .post-title {
+      font-size: 2em;
+      line-height: 1.5em;
+      color: #787878;
+    }
+    .post-date {
+      color: #c7c7c7;
+      font-size: 0.6em;
+    }
+    .post-description {
+      color: #a2a2a2;
+    }
+  }
+}
+
+@media all and (max-width: 1060px) {
+  .list {
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+
+@media all and (max-width: 480px) {
+  .list__item {
+    .post-title {
+      font-size: 1.5em;
+    }
   }
 }

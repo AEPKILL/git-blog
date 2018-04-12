@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Footer from './components/footer/footer';
 import PostList from './components/post-list/post-list';
+import PostView from './components/post-view/post-view';
 
 import './blog-page.scss';
 
@@ -55,6 +56,7 @@ export default class BlogPage extends React.Component<{}, BlogPageState> {
                   api={BLOG_INFO.POST_INFO.path}
                   basePath="blog"
                   page={props.match.params.page}
+                  total={BLOG_INFO.POST_INFO.count}
                 />
               )}
             />
@@ -84,10 +86,7 @@ export default class BlogPage extends React.Component<{}, BlogPageState> {
                 )
               }
             />
-            <Route
-              path="/blog/post/:path*"
-              render={name => <div>post --- {name.match.params.path}</div>}
-            />
+            <Route path="/blog/post/:path*" component={PostView} />
             <Route
               path="/blog/*"
               render={() => <Redirect to="/404NotFound" />}
@@ -115,12 +114,15 @@ function postListAdapter(
         basePath={basePath}
         page={page}
         title={`${title}: ${name}`}
+        total={matchMeta.count}
       />
     );
   } else {
     return (
       <div>
-        {title} &lt;{name}&gt; {i18n.notExist}
+        <h1 className="title">
+          {title} &lt;{name}&gt; {i18n.notExist}
+        </h1>
       </div>
     );
   }

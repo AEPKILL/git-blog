@@ -1,10 +1,9 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="../../../bin/web-declare.d.ts" />
+import i18n, { coverI18n } from '@i18n/index';
+import classnames from '@utils/classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import i18n, { coverI18n } from '../../i18n';
-
-import classnames from '../../utils/classnames';
 
 import './cover-page.scss';
 

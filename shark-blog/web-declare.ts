@@ -18,7 +18,7 @@ declare global {
   type PostPagesMeta = PagesMeta<PostMeta>;
   interface PostMeta {
     title: string;
-    data: string;
+    date: string;
     description: string;
     source: string;
     categories?: string;

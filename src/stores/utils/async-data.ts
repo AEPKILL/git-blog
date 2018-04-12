@@ -9,6 +9,7 @@ export default class AsyncData<T> {
   @observable asyncStstus: ASYNC_STATUS = ASYNC_STATUS.INIT;
   @observable data: T | null = null;
   @observable error: Error | null = null;
+
   @action
   reset() {
     this.data = null;
@@ -17,7 +18,6 @@ export default class AsyncData<T> {
   }
   @action
   waitData(promise: Promise<T>) {
-    this.reset();
     this.asyncStstus = ASYNC_STATUS.LOADING;
     promise
       .then(data => {

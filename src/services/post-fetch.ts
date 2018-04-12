@@ -1,12 +1,11 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="./../../bin/web-declare.d.ts" />
-import { join } from '@utils/url';
 import axios from 'axios';
 
-export default class PostFetch {
+export default class PostFetchServices {
   static get(path: string) {
     return axios
-      .get<string>(join(BLOG_INFO.BLOG_INFO.postDir, path))
+      .get<string>(path)
       .then(data => data.data);
   }
 }

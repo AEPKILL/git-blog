@@ -1,4 +1,4 @@
-const bootstrapStyle = document.getElementById('bootstrap-animation')!;
+const bootstrapStyle = document.getElementById('bootstrap-css')!;
 const animationElement = document.getElementById('loading')!;
 
 class Bootstrap {

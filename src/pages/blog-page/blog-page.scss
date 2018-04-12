@@ -3,6 +3,22 @@ body {
 }
 .blog {
   width: 100%;
+  &-view,
+  img {
+    max-width: 960px;
+  }
+  .error {
+    padding: 20px 0;
+  }
+  .retry {
+    margin-left: 20px;
+    border-bottom: 1px solid #666;
+    cursor: pointer;
+  }
+  .title {
+    margin: 1.5rem 0 2.7rem;
+    text-align: center;
+  }
   .left-side {
     position: fixed;
     max-width: 430px;
@@ -80,7 +96,7 @@ body {
     .left-side {
       left: -80%;
     }
-    .content-side.show-left-side{
+    .content-side.show-left-side {
       transform: translateX(80%);
     }
   }
@@ -102,6 +118,7 @@ body {
     }
     .content-side.show-left-side,
     .content-side {
+      padding: 0 1em;
       transition: none;
       transform: translateX(0);
     }

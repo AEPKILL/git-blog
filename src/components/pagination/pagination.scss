@@ -1,0 +1,20 @@
+.pagination {
+  margin: 0;
+  padding: 10px 0;
+  .pagination__item {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+    &.disable {
+      cursor: auto;
+      pointer-events: none;
+      span {
+        border-bottom: none;
+      }
+    }
+    span {
+      border-bottom: 1px solid #666;
+    }
+  }
+}

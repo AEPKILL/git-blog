@@ -26,5 +26,13 @@ export default {
   notExist: {
     zh: '不存在',
     en: `don't exist`
+  },
+  errorMessage: {
+    zh: '错误消息',
+    en: 'error message'
+  },
+  page: {
+    zh: '页码',
+    en: 'Page'
   }
 };
