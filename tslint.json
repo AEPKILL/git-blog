@@ -69,6 +69,7 @@
         "variable-declaration": "nospace"
       }
     ],
+    "no-submodule-imports":false,
     "no-any": true,
     "no-implicit-dependencies": false,
     "ordered-imports": [true],

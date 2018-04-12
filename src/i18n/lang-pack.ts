@@ -1,14 +1,30 @@
 export default {
   posts: {
     zh: '博客',
-    en: 'posts'
+    en: 'Posts'
   },
   about: {
     zh: '关于',
-    en: 'about'
+    en: 'About'
   },
-  tags: {
+  concat: {
+    zh: '联系我',
+    en: 'Concat'
+  },
+  tag: {
     zh: '标签',
-    en: 'tags'
+    en: 'Tag'
+  },
+  categories: {
+    zh: '分类',
+    en: 'Categories'
+  },
+  _404notFound: {
+    zh: '找不到这个页面',
+    en: '404 Not Found'
+  },
+  notExist: {
+    zh: '不存在',
+    en: `don't exist`
   }
 };

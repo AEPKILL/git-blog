@@ -12,6 +12,6 @@ export default class AboutPage extends React.Component<{}, AboutPageState> {
   }
 
   render() {
-    return <div />;
+    return <div>about page</div>;
   }
 }

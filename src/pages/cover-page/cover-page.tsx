@@ -45,9 +45,9 @@ export default class CoverPage extends React.Component<CoverPageProps> {
                       </Link>
                     </li>
                     <li className="navigation__item">
-                      <Link to="/tags" className="button">
-                        {i18n.tags}
-                      </Link>
+                      <a className="button" href={BLOG_INFO.BLOG_INFO.concat}>
+                        {i18n.concat}
+                      </a>
                     </li>
                   </ul>
                 </nav>

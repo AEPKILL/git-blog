@@ -10,7 +10,15 @@ const baseConfig: Configuration = {
     main: './src/index.tsx'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@stores': resolve(__dirname, '../src/stores'),
+      '@services': resolve(__dirname, '../src/services'),
+      '@components': resolve(__dirname, '../src/components'),
+      '@utils': resolve(__dirname, '../src/utils'),
+      '@pages': resolve(__dirname, '../src/pages'),
+      '@i18n': resolve(__dirname, '../src/i18n')
+    }
   },
   context: resolve(__dirname, '..'),
   module: {

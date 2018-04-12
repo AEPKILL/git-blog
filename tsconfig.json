@@ -3,7 +3,18 @@
   "compilerOptions": {
     "sourceMap": true,
     "target": "es6",
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "paths": {
+      "@stores/*": ["stores/*"],
+      "@services/*": ["services/*"],
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@pages/*": ["pages/*"],
+      "@i18n": ["i18n/index"],
+      "@i18n/*": ["i18n/*"]
+    }
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

@@ -1,3 +1,6 @@
+body {
+  overflow-x: hidden;
+}
 .blog {
   width: 100%;
   .left-side {
@@ -7,7 +10,8 @@
     left: 0;
     top: 0;
     height: 100%;
-    transition: left 1.5s;
+    transition: left 1s;
+    z-index: 5;
     .panel-cover {
       position: absolute;
       left: 0;
@@ -35,11 +39,19 @@
     position: absolute;
     top: 0;
     right: -30px;
-    transition: all 1.5s;
+    transition: right 1s;
     z-index: 9999;
   }
   .menu-button.close {
     right: 0;
+  }
+  .content-side {
+    position: absolute;
+    left: 430px;
+    right: 0;
+    padding: 2rem 3rem;
+    transition: all 1s;
+    overflow: hidden;
   }
 }
 
@@ -54,6 +66,12 @@
     .left-side.show {
       left: 0;
     }
+    .content-side {
+      left: 0;
+    }
+    .content-side.show-left-side {
+      transform: translateX(430px);
+    }
   }
 }
 
@@ -61,6 +79,9 @@
   .blog {
     .left-side {
       left: -80%;
+    }
+    .content-side.show-left-side{
+      transform: translateX(80%);
     }
   }
 }
@@ -79,12 +100,18 @@
       max-width: none;
       transition: none;
     }
+    .content-side.show-left-side,
+    .content-side {
+      transition: none;
+      transform: translateX(0);
+    }
     .navigation-wrapper {
       position: relative;
       .navigation {
         &__item {
           display: inline-block;
-          width: 25%;
+          width: 30%;
+          font-weight: lighter;
         }
       }
     }
