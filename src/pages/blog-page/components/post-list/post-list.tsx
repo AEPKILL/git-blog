@@ -1,16 +1,16 @@
 import DelayShow from '@components/delay-show/delay-show';
+import Error from '@components/error/error';
 import Loading from '@components/loading/loading';
 import Pagination from '@components/pagination/pagination';
-import i18n from '@i18n/index';
 import PostPagingFetchServices from '@services/post-paging-fetch';
 import AsyncData, { ASYNC_STATUS } from '@stores/utils/async-data';
 import classnames from '@utils/classnames';
-import { join } from '@utils/url';
 
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { Link, RouterChildContext } from 'react-router-dom';
 import { inject, observer } from 'ts-mobx-react';
+import join from 'url-join';
 
 import './post-list.scss';
 
@@ -26,7 +26,7 @@ export interface PostListProps {
 @observer
 export default class PostList extends React.Component<PostListProps, {}> {
   context!: RouterChildContext<{}>;
-  @inject('postList') asyncData!: AsyncData<PostPagesMeta>;
+  @inject('postList') postLit!: AsyncData<PostPagesMeta>;
   constructor(props: PostListProps) {
     super(props);
     this.updateData = this.updateData.bind(this);
@@ -35,7 +35,7 @@ export default class PostList extends React.Component<PostListProps, {}> {
   updateData() {
     const { api, page } = this.props;
     const postPaging = new PostPagingFetchServices(api);
-    this.asyncData.waitData(postPaging.get(page || 0));
+    this.postLit.waitData(postPaging.get(page || 0));
   }
   componentDidUpdate(prePops: PostListProps) {
     if (this.props.page === prePops.page && this.props.api === prePops.api) {
@@ -47,10 +47,10 @@ export default class PostList extends React.Component<PostListProps, {}> {
     this.updateData();
   }
   onPageChange(page: number) {
-    this.context.router.history.push(join('/', this.props.basePath, page));
+    this.context.router.history.push(join('/', this.props.basePath, `${page}`));
   }
   asyncRender() {
-    const { error, data, asyncStstus } = this.asyncData;
+    const { error, data, asyncStstus } = this.postLit;
     const { page } = this.props;
     switch (asyncStstus) {
       case ASYNC_STATUS.LOADING: {
@@ -61,14 +61,7 @@ export default class PostList extends React.Component<PostListProps, {}> {
         );
       }
       case ASYNC_STATUS.ERROR: {
-        return (
-          <div className="error">
-            {error && `${i18n.errorMessage}: ${error.message}`}
-            <span className="retry" onClick={this.updateData}>
-              重试
-            </span>
-          </div>
-        );
+        return <Error error={error!} retry={this.updateData} />;
       }
       case ASYNC_STATUS.INIT: {
         return null;

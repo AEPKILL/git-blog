@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './about-page.scss';
+
 export interface AboutPageState {
   name?: string;
 }
@@ -9,6 +11,7 @@ export default class AboutPage extends React.Component<{}, AboutPageState> {
     super(props);
 
     this.state = {};
+
   }
 
   render() {

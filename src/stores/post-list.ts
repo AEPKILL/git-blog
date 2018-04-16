@@ -1,5 +1,3 @@
-import AsyncData from './utils/async-data';
+import AsyncData from '@stores/utils/async-data';
 
-const postList = new AsyncData<PostPagesMeta>();
-
-export default postList;
+export default new AsyncData<PostPagesMeta>();

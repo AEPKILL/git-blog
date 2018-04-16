@@ -1,3 +1,7 @@
+.pagination-wrapper {
+  font-size: 0.8em;
+  color: #999999;
+}
 .pagination {
   margin: 0;
   padding: 10px 0;
@@ -10,11 +14,8 @@
       cursor: auto;
       pointer-events: none;
       span {
-        border-bottom: none;
+        border-bottom: 1px solid #999;
       }
-    }
-    span {
-      border-bottom: 1px solid #666;
     }
   }
 }

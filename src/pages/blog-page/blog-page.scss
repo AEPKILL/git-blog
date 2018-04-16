@@ -7,13 +7,8 @@ body {
   img {
     max-width: 960px;
   }
-  .error {
-    padding: 20px 0;
-  }
-  .retry {
-    margin-left: 20px;
-    border-bottom: 1px solid #666;
-    cursor: pointer;
+  &-view {
+    min-height: 300px;
   }
   .title {
     margin: 1.5rem 0 2.7rem;
@@ -118,7 +113,7 @@ body {
     }
     .content-side.show-left-side,
     .content-side {
-      padding: 0 1em;
+      padding: 1em;
       transition: none;
       transform: translateX(0);
     }

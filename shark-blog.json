@@ -3,5 +3,8 @@
   "rootDir": "src",
   "metaDir": "assets/meta",
   "postDir": "assets/post",
-  "htmlInject": ["index.html"]
+  "htmlInject": ["index.html"],
+  "extra": {
+    "imgServer": "https://aepkill.github.io"
+  }
 }

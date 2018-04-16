@@ -107,6 +107,7 @@ function postListAdapter(
   title: string
 ) {
   const matchMeta = pathsMeta.filter(meta => meta.name === name)[0];
+  console.log(matchMeta);
   if (matchMeta) {
     return (
       <PostList
@@ -119,11 +120,9 @@ function postListAdapter(
     );
   } else {
     return (
-      <div>
-        <h1 className="title">
-          {title} &lt;{name}&gt; {i18n.notExist}
-        </h1>
-      </div>
+      <h1 className="title">
+        {title} &lt;{name}&gt; {i18n.notExist}
+      </h1>
     );
   }
 }

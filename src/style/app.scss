@@ -126,7 +126,18 @@ hr {
   border: none;
 }
 
+code {
+  border: none;
+  word-wrap: break-word;
+  border-radius: 3px;
+  font-family: Consolas, 'Microsoft Yahei', '微软雅黑', Menlo, Monaco,
+    Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+    Courier New, monospace, serif;
+  font-size: 0.85em;
+}
+
 @import './scroll-bar.scss';
 @import './panel.scss';
 @import './navigation.scss';
 @import './button.scss';
+@import './hightlight/hightlight.scss';

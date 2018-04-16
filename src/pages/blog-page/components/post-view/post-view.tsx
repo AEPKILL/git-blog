@@ -1,14 +1,16 @@
 import DelayShow from '@components/delay-show/delay-show';
+import Error from '@components/error/error';
 import Loading from '@components/loading/loading';
+import PostMeta from '@components/post-meta/post-meta';
 import Post from '@components/post/post';
-import i18n from '@i18n/index';
 import PostFetchServices from '@services/post-fetch';
 import AsyncData, { ASYNC_STATUS } from '@stores/utils/async-data';
-import { join } from '@utils/url';
+import separateMarkdownMeta from '../../../../../bin/separate-markdown-meta';
 
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'ts-mobx-react';
+import join from 'url-join';
 
 export type PostViewProps = RouteComponentProps<{ path: string }>;
 
@@ -29,11 +31,12 @@ export default class PostView extends React.Component<
   }
   loadPost() {
     const { path } = this.props.match.params;
-    console.log(join('/', path));
+    console.log(join('/', path), path);
     this.post.waitData(PostFetchServices.get(join('/', path)));
   }
   componentDidMount() {
     this.loadPost();
+    window.scroll(0, 0);
   }
   asyncRender() {
     const { error, data, asyncStstus } = this.post;
@@ -46,22 +49,22 @@ export default class PostView extends React.Component<
         );
       }
       case ASYNC_STATUS.ERROR: {
-        return (
-          <div className="error">
-            {error && `${i18n.errorMessage}: ${error.message}`}
-            <span className="retry" onClick={this.loadPost}>
-              重试
-            </span>
-          </div>
-        );
+        return <Error error={error!} retry={this.loadPost} />;
       }
       case ASYNC_STATUS.INIT: {
         return null;
       }
     }
-    return <Post content={data!} />;
+    const { meta, content } = separateMarkdownMeta(data!);
+    return (
+      <>
+        <h1>{meta.title}</h1>
+        <PostMeta meta={meta} />
+        <Post content={content} />
+      </>
+    );
   }
   render() {
-    return <div className="blog-view">{this.asyncRender()}</div>;
+    return <div className="blog-view post-view">{this.asyncRender()}</div>;
   }
 }

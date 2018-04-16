@@ -1,0 +1,9 @@
+.error {
+  padding: 20px 0;
+  font-size: 1em;
+  .retry {
+    margin-left: 20px;
+    border-bottom: 1px solid #666;
+    cursor: pointer;
+  }
+}

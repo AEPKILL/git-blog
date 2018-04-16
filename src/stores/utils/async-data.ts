@@ -1,10 +1,12 @@
 import { action, observable } from 'mobx';
+
 export const enum ASYNC_STATUS {
   INIT,
   LOADING,
   ERROR,
   SUCCESS
 }
+
 export default class AsyncData<T> {
   @observable asyncStstus: ASYNC_STATUS = ASYNC_STATUS.INIT;
   @observable data: T | null = null;

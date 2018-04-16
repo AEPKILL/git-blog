@@ -1,0 +1,18 @@
+.post-meta {
+  font-size: 0.8em;
+  color: #c7c7c7;
+  &__categories,
+  &__date,
+  &__tags {
+    margin-right: 1.5em;
+    & > span {
+      padding-right: 0.5em;
+    }
+    a {
+      color: #666666;
+    }
+  }
+  &__tag {
+    margin-right: 0.3em;
+  }
+}

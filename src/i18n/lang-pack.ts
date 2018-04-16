@@ -34,5 +34,13 @@ export default {
   page: {
     zh: '页码',
     en: 'Page'
+  },
+  unknowError: {
+    zh: '未知错误',
+    en: 'unknow error'
+  },
+  retry: {
+    zh: '重试',
+    en: 'retry'
   }
 };
