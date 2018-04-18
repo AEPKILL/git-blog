@@ -1,4 +1,5 @@
 import MenuButton from '@components/menu-button/menu-button';
+import Title from '@components/title';
 import i18n from '@i18n/index';
 import CoverPage from '@pages/cover-page/cover-page';
 import classnames from '@utils/classnames';
@@ -52,12 +53,15 @@ export default class BlogPage extends React.Component<{}, BlogPageState> {
               exact
               path="/blog/:page(\d+)?"
               render={props => (
-                <PostList
-                  api={BLOG_INFO.POST_INFO.path}
-                  basePath="blog"
-                  page={props.match.params.page}
-                  total={BLOG_INFO.POST_INFO.count}
-                />
+                <>
+                <Title title={BLOG_INFO.BLOG_INFO.title}/>
+                  <PostList
+                    api={BLOG_INFO.POST_INFO.path}
+                    basePath="blog"
+                    page={props.match.params.page}
+                    total={BLOG_INFO.POST_INFO.count}
+                  />
+                </>
               )}
             />
             <Route
@@ -107,22 +111,27 @@ function postListAdapter(
   title: string
 ) {
   const matchMeta = pathsMeta.filter(meta => meta.name === name)[0];
-  console.log(matchMeta);
   if (matchMeta) {
     return (
-      <PostList
-        api={matchMeta.path}
-        basePath={basePath}
-        page={page}
-        title={`${title}: ${name}`}
-        total={matchMeta.count}
-      />
+      <>
+        <Title title={`${title} - ${BLOG_INFO.BLOG_INFO.title}`} />
+        <PostList
+          api={matchMeta.path}
+          basePath={basePath}
+          page={page}
+          title={`${title}: ${name}`}
+          total={matchMeta.count}
+        />
+      </>
     );
   } else {
     return (
-      <h1 className="title">
-        {title} &lt;{name}&gt; {i18n.notExist}
-      </h1>
+      <>
+        <Title title={`${title} - ${BLOG_INFO.BLOG_INFO.title}`} />
+        <h1 className="title">
+          {title} &lt;{name}&gt; {i18n.notExist}
+        </h1>
+      </>
     );
   }
 }

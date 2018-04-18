@@ -5,18 +5,23 @@ import './error.scss';
 
 interface ErrorProps {
   retry?: () => void;
+  retryText?: string | JSX.Element | React.ReactNode;
   error: Error;
 }
 
-const Error: React.SFC<ErrorProps> = ({ error, retry }) => {
+const Error: React.SFC<ErrorProps> = ({
+  error,
+  retry,
+  retryText = i18n.retry
+}) => {
   return (
     <div className="error">
       {`${i18n.errorMessage}: ${(error && error.message) || i18n.unknowError}`}
-      {retry && (
+      {
         <span className="retry" onClick={retry}>
-          {i18n.retry}
+          {retryText}
         </span>
-      )}
+      }
     </div>
   );
 };

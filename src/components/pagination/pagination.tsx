@@ -11,15 +11,25 @@ export interface PaginationProps {
   onChange?(page?: number): void;
 }
 
+const PAGE_SHOW = 10;
+
 const Pagination: React.SFC<PaginationProps> = props => {
-  const { total, pageSize, current } = props;
+  const { total, pageSize, current = 0 } = props;
   const totalPage = Math.ceil(total / pageSize);
-  const pages: number[] = [];
+  let pages: number[] = [];
   for (let i = 0; i < totalPage; i++) {
     pages.push(i);
   }
   let paginationElement: JSX.Element | null = null;
-
+  if (pages.length > PAGE_SHOW) {
+    let start = current - 4 >= 0 ? current : 0;
+    let end = start + 5;
+    if (end >= pages.length) {
+      start = 0;
+      end = pages.length - 1;
+    }
+    pages = pages.slice(start, end);
+  }
   if (pages.length) {
     paginationElement = (
       <ul className="pagination">

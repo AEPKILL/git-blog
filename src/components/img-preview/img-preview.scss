@@ -1,0 +1,19 @@
+.blog-img-preview {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.2);
+  display: none;
+  overflow: auto;
+  &.show {
+    display: block;
+  }
+  img {
+    position: absolute;
+    transition: all .5s;
+    cursor: zoom-out;
+  }
+}

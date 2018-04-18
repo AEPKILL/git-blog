@@ -2,6 +2,7 @@ import DelayShow from '@components/delay-show/delay-show';
 import Error from '@components/error/error';
 import Loading from '@components/loading/loading';
 import Pagination from '@components/pagination/pagination';
+import i18n from '@i18n/index';
 import PostPagingFetchServices from '@services/post-paging-fetch';
 import AsyncData, { ASYNC_STATUS } from '@stores/utils/async-data';
 import classnames from '@utils/classnames';
@@ -51,7 +52,15 @@ export default class PostList extends React.Component<PostListProps, {}> {
   }
   asyncRender() {
     const { error, data, asyncStstus } = this.postLit;
-    const { page } = this.props;
+    const { page = 0 } = this.props;
+    if (page > this.props.total) {
+      return (
+        <Error
+          error={new RangeError(i18n.exceededMaxPage)}
+          retryText={<Link to="/blog">{i18n.back}</Link>}
+        />
+      );
+    }
     switch (asyncStstus) {
       case ASYNC_STATUS.LOADING: {
         return (
@@ -83,7 +92,7 @@ export default class PostList extends React.Component<PostListProps, {}> {
         </ul>
         <Pagination
           total={this.props.total}
-          current={(page && +page) || 0}
+          current={+page}
           pageSize={BLOG_INFO.BLOG_INFO.pageSize}
           onChange={this.onPageChange}
         />

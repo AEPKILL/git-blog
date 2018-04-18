@@ -42,5 +42,17 @@ export default {
   retry: {
     zh: '重试',
     en: 'retry'
+  },
+  back: {
+    zh: '返回',
+    en: 'back'
+  },
+  exceededMaxPage: {
+    zh: '超过最大分页数量',
+    en: 'Maximum page number exceeded'
+  },
+  cantFindPost: {
+    zh: '找不到文章',
+    en: `can't find post`
   }
 };
