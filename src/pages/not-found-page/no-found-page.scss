@@ -1,0 +1,39 @@
+.not-found-page {
+  margin: 0 auto;
+  background-image: url(../../assets/images/404-cover.png);
+  .tips {
+    width: 100%;
+  }
+  .panel-main__inner {
+    position: absolute;
+    display: block;
+    width: 100%;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .panel-cover__title {
+    color: #fff;
+  }
+}
+
+@keyframes rocket-move {
+  0% {
+    left: -25px;
+  }
+  50% {
+    left: 25px;
+  }
+  100% {
+    left: -25px;
+  }
+}
+
+.rocket {
+  width: 275px;
+  height: 375px;
+  background: url(../../assets/images/rocket.png) no-repeat;
+  margin: 100px auto 0px;
+  position: relative;
+  animation: rocket-move 5s infinite;
+}

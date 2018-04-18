@@ -23,6 +23,9 @@
       rgba(0, 0, 0, 0.9)
     );
   }
+  .navigation {
+    padding: 0;
+  }
 }
 
 @media all and (max-width: 430px) {
@@ -35,7 +38,6 @@
   .cover-navigation,
   .navigation {
     width: 100%;
-    padding: 0;
   }
   .navigation {
     &__item {

@@ -20,7 +20,7 @@ export default {
     en: 'Categories'
   },
   _404notFound: {
-    zh: '找不到这个页面',
+    zh: '你似乎来到了未知的地方',
     en: '404 Not Found'
   },
   notExist: {
