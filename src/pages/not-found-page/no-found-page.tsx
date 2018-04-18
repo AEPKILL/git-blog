@@ -1,3 +1,4 @@
+import BubbleEffect from '@components/bubble-effect';
 import Title from '@components/title';
 import i18n from '@i18n/index';
 
@@ -52,6 +53,7 @@ export default class NoFoundPage extends React.Component<{}, NoFoundState> {
           </div>
         </div>
         <div className="panel-cover--overlay" />
+        <BubbleEffect/>
       </div>
     );
   }
