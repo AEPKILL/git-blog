@@ -1,5 +1,6 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="../../../bin/web-declare.d.ts" />
+import Title from '@components/title';
 import i18n, { coverI18n } from '@i18n/index';
 import classnames from '@utils/classnames';
 import * as React from 'react';
@@ -19,6 +20,7 @@ export default class CoverPage extends React.Component<CoverPageProps> {
   render() {
     return (
       <div className={classnames(this.props.className, 'panel-cover')}>
+        <Title title={BLOG_INFO.BLOG_INFO.title} />
         <div className="panel-main">
           <div className="panel-main__inner panel-inverted">
             <div className="panel-main__content">

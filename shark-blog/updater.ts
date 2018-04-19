@@ -18,13 +18,14 @@ export default class Updater {
     try {
       const fileEmitter = new FileEmitter();
       const postsMetadata = await collectAllPostMetadata();
+      const startTime = Date.now();
       fileEmitter.htmlAdditions.BLOG_INFO = getConfig();
       // 清空整个 Meta 目录
       removeSync(workspace.getMetaDir());
       addPostFiles(postsMetadata, fileEmitter);
       addTagsAndCategoriesFiles(postsMetadata, fileEmitter);
       fileEmitter.emitFile();
-      console.log(green(`update blog metadata success.`));
+      console.log(green(`update blog metadata success, ${Date.now() - startTime}ms.`));
     } catch (e) {
       console.log(red(`update blog metadata failed: ${e.message}.`));
     }

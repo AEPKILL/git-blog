@@ -1,3 +1,4 @@
+import MenuButton from '@components/menu-button/menu-button';
 import classnames from '@utils/classnames';
 
 import * as React from 'react';
@@ -68,6 +69,7 @@ export default class ImgPreview extends React.Component<
           show: !!src
         })}
       >
+        <MenuButton onClick={onClose} />
         <img src={src} onClick={onClose} style={this.state.style} />
       </div>
     );

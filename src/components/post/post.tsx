@@ -9,8 +9,8 @@ const { Renderer } = marked;
 
 const Post: React.SFC<{ content: string }> = props => {
   let htmlString = marked.parse(props.content);
-  if (BLOG_INFO.BLOG_INFO.extra && BLOG_INFO.BLOG_INFO.extra.imgServer) {
-    htmlString = redirectImgSrc(htmlString);
+  if (BLOG_INFO.BLOG_INFO.site) {
+    htmlString = redirectImgAndLink(htmlString);
   }
   const html = {
     __html: htmlString
@@ -18,16 +18,23 @@ const Post: React.SFC<{ content: string }> = props => {
   return <article className="post-content" dangerouslySetInnerHTML={html} />;
 };
 
-function redirectImgSrc(html: string) {
+function redirectImgAndLink(html: string) {
   const div = document.createElement('div');
   const postDir = BLOG_INFO.BLOG_INFO.postDir;
   div.innerHTML = html;
   const imgs = Array.from(div.querySelectorAll('img'));
+  const links = Array.from(div.querySelectorAll('a'));
   for (const img of imgs) {
     const src = img.getAttribute('src') || '';
     // http:// | https:// | //
     if (!/^(https:|http:)?\/\//.test(src)) {
-      img.src = join(BLOG_INFO.BLOG_INFO.extra!.imgServer, postDir, src);
+      img.src = join(BLOG_INFO.BLOG_INFO.site, postDir, src);
+    }
+  }
+  for (const link of links) {
+    const href = link.href || '';
+    if (!/^(https:|http:)?\/\//.test(href)) {
+      link.href = join(BLOG_INFO.BLOG_INFO.site, postDir, href);
     }
   }
   return div.innerHTML;

@@ -16,4 +16,12 @@
     transition: all .5s;
     cursor: zoom-out;
   }
+  .menu-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    .bar {
+      border: none;
+    }
+  }
 }

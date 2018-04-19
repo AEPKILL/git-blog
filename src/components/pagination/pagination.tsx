@@ -22,11 +22,11 @@ const Pagination: React.SFC<PaginationProps> = props => {
   }
   let paginationElement: JSX.Element | null = null;
   if (pages.length > PAGE_SHOW) {
-    let start = current - 4 >= 0 ? current : 0;
-    let end = start + 5;
+    let start = current - 4 >= 0 ? current - 4 : 0;
+    let end = start + 9;
     if (end >= pages.length) {
-      start = 0;
       end = pages.length - 1;
+      start = end - 9 >= 0 ? end - 9 : 0;
     }
     pages = pages.slice(start, end);
   }

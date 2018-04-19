@@ -79,7 +79,7 @@ export default class BubbleEffect extends React.Component<
     if (this.lastCanvasWidth > width) {
       this.circles = this.circles.filter(c => c.x < width);
     } else {
-      for (let x = this.lastCanvasWidth; x < width / 2; x++) {
+      for (let x = this.lastCanvasWidth; x < width / 3; x++) {
         const c = new Circle();
         c.init(width, height);
         this.circles.push(c);

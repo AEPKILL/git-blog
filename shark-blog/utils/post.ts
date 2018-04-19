@@ -65,7 +65,9 @@ export function collectPostMetadata(path: string, relativePath: string) {
       let value: string;
 
       if (index < 0) {
-        defer.reject(`Illegal line:[line: ${line}](${path})`);
+        defer.reject(new Error(`Illegal line:[line: ${line}](${path})`));
+        read.close();
+        return;
       }
 
       key = input.substring(0, index).trim();
