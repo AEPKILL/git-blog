@@ -1,9 +1,11 @@
-import post from './post';
-import postList from './post-list';
+import post from '@stores/post';
+import postList from '@stores/post-list';
+import terminal from '@stores/terminal';
 
 const stores = {
   postList,
-  post
+  post,
+  terminal
 };
 
 export default stores;

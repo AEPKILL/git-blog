@@ -7,8 +7,12 @@ export default {
     zh: '关于',
     en: 'About'
   },
+  aboutMe: {
+    zh: '关于我',
+    en: 'About Me'
+  },
   concat: {
-    zh: '联系我',
+    zh: '联系',
     en: 'Concat'
   },
   tag: {
@@ -54,5 +58,9 @@ export default {
   cantFindPost: {
     zh: '找不到文章',
     en: `can't find post`
+  },
+  terminal: {
+    zh: '终端',
+    en: 'terminal'
   }
 };

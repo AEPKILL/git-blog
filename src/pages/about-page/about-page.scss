@@ -1,4 +1,13 @@
 .about-page.panel-cover {
-  margin: 0 auto;
-  background-image: url(../../assets/images/about.png);
+  .panel-cover__title {
+    color: #fff;
+  }
+  .panel-main__inner {
+    position: absolute;
+    display: block;
+    width: 100%;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

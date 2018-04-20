@@ -15,6 +15,7 @@
     "interface-name": [false],
     "jsdoc-format": true,
     "label-position": true,
+    "no-empty-interface": false,
     "max-line-length": [false, 150],
     "member-ordering": [
       true,
@@ -52,7 +53,7 @@
       "check-else",
       "check-whitespace"
     ],
-    "quotemark": [true, "jsx-double","single"],
+    "quotemark": [true, "jsx-double", "single"],
     "radix": true,
     "semicolon": [true, "always"],
     "triple-equals": [false],
@@ -69,7 +70,7 @@
         "variable-declaration": "nospace"
       }
     ],
-    "no-submodule-imports":false,
+    "no-submodule-imports": false,
     "no-any": true,
     "no-implicit-dependencies": false,
     "ordered-imports": [true],
