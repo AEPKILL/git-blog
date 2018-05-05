@@ -26,6 +26,28 @@ cd my-blog
 blog start
 ```
 
+# shark-blog.json
+
+新创建的博客下有一个 `shark-blog.json`文件，这个是博客的配置文件，它包含以下可配置项：
+
+1. title 博客的 title
+2. description 简短的描述
+3. site 博客部署的网站域名
+4. pageSize 每页包含多少博客项
+5. author 博客作者
+6. concat 博客作者联系方式
+7. language 博客语言
+8. rootDir 博客根目录
+9. postDir 博客文章存放的目录，相对于博客根目录
+10. theme 博客主题
+11. publicPath 博客的公共路径，这个值现在没用到，保留
+12. htmInject 一个数组，存放要注入博客元数据的 `html` 文件
+13. extra 这个值是给主题用的，由具体的博客主题决定
+
+# 定制主题
+
+如果要自己写主题的话，参考 `src`目录下的默认主题源码。
+
 # 为啥要写这个
 
 一开始我是用 `hexo`的，但是我要使用两个仓库来管理我的博客，一个是用于存放博客源码一个则是用于发布。
@@ -38,7 +60,7 @@ blog start
 
 `shark-blog` 的更新处理速度也非常快，一千篇博客大概 1 秒钟就处理好了。
 
-以上就是为什幺要写 `shark-blog` 的原因。
+大概就这些原因吧。
 
 # 参(chao)考(xi)设计
 
