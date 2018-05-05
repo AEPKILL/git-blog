@@ -42,7 +42,7 @@ function redirectImgAndLink(html: string) {
     }
   }
   for (const link of links) {
-    const href = link.href || '';
+    const href = link.getAttribute('href') || '';
     if (!/^(https:|http:)?\/\//.test(href)) {
       link.href = join(site, postDir, href);
     }
