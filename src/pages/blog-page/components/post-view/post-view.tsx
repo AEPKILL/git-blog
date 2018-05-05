@@ -49,7 +49,7 @@ export default class PostView extends React.Component<
   PostViewProps,
   PostViewState
 > {
-  @inject('post') post!: AsyncData<string>;
+  @inject('post') post!: AsyncData<string, string>;
   postViewRef = React.createRef<HTMLDivElement>();
 
   constructor(props: PostViewProps) {
@@ -61,6 +61,13 @@ export default class PostView extends React.Component<
   }
   loadPost() {
     const { path } = this.props.match.params;
+    if (
+      this.post.extra === path &&
+      this.post.asyncStstus === ASYNC_STATUS.SUCCESS
+    ) {
+      return;
+    }
+    this.post.extra = path;
     this.post.waitData(PostFetchServices.get(join('/', path)));
   }
   componentDidMount() {

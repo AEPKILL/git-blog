@@ -26,7 +26,7 @@ export interface PostListProps {
 
 @observer
 export default class PostList extends React.Component<PostListProps, {}> {
-  @inject('postList') postLit!: AsyncData<PostPagesMeta>;
+  @inject('postList') postLit!: AsyncData<PostPagesMeta, string>;
   context!: RouterChildContext<{}>;
 
   constructor(props: PostListProps) {
@@ -37,6 +37,11 @@ export default class PostList extends React.Component<PostListProps, {}> {
   updateData() {
     const { api, page } = this.props;
     const postPaging = new PostPagingFetchServices(api);
+    const key = `${api}:${page}`;
+    if (this.postLit.extra === key && this.postLit.asyncStstus === ASYNC_STATUS.SUCCESS) {
+      return;
+    }
+    this.postLit.extra = key;
     this.postLit.waitData(postPaging.get(page || 0));
   }
   handlePageChange(page: number) {
