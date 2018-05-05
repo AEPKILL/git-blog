@@ -64,14 +64,15 @@ export default class PostView extends React.Component<
     this.post.waitData(PostFetchServices.get(join('/', path)));
   }
   componentDidMount() {
-    this.loadPost();
     this.postViewRef.current!.addEventListener('click', this.handlePreviewImg);
+    this.loadPost();
   }
   componentWillUnmount() {
     this.postViewRef.current!.removeEventListener(
       'click',
       this.handlePreviewImg
     );
+    this.post.reset();
   }
   handlePreviewImg(event: Event) {
     const target = event.target as HTMLImageElement;

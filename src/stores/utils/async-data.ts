@@ -7,10 +7,11 @@ export const enum ASYNC_STATUS {
   SUCCESS
 }
 
-export default class AsyncData<T> {
+export default class AsyncData<T, D = {}> {
   @observable asyncStstus: ASYNC_STATUS = ASYNC_STATUS.INIT;
   @observable data: T | null = null;
   @observable error: Error | null = null;
+  @observable extra?: D;
 
   @action
   reset() {

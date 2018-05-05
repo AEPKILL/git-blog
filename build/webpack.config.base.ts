@@ -36,10 +36,23 @@ const baseConfig: Configuration = {
   plugins: [
     new copyPlugin([
       {
-        from: './src/assets',
-        to: 'assets',
-        toType: 'dir',
-        ignore: ['index.html']
+        from: './src/favicon.png',
+        to: 'favicon.png',
+        toType: 'file'
+      }
+    ]),
+    new copyPlugin([
+      {
+        from: './src/assets/meta',
+        to: 'assets/meta',
+        toType: 'dir'
+      }
+    ]),
+    new copyPlugin([
+      {
+        from: './src/assets/post',
+        to: 'assets/post',
+        toType: 'dir'
       }
     ]),
     ...['index.html', '404.html'].map(
