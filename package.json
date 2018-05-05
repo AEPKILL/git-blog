@@ -6,16 +6,15 @@
   "bin": {
     "blog": "bin/cli.js"
   },
-  "files": [
-    "bin",
-    "theme"
-  ],
+  "files": ["bin", "theme"],
   "scripts": {
-    "start": "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=development webpack-dev-server --config ./build/webpack.config.dev.ts --hot",
+    "start":
+      "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=development webpack-dev-server --config ./build/webpack.config.dev.ts --hot",
     "start:bin": "tsc -p ./shark-blog/tsconfig.json -w",
     "build": "npm run build:bin&&npm run build:prod&&npm run build:theme",
-    "build:theme": "ts-node ./build/build-theme",
-    "build:prod": "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=production webpack --config ./build/webpack.config.prod.ts",
+    "build:theme": "ts-node  --project ./build/tsconfig.json ./build/build-theme.ts",
+    "build:prod":
+      "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=production webpack --config ./build/webpack.config.prod.ts",
     "build:bin": "cleandir ./bin&&tsc -p ./shark-blog/tsconfig.json"
   },
   "keywords": [],

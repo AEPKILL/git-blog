@@ -14,13 +14,22 @@ import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'ts-mobx-react';
 import join from 'url-join';
 
+import '@components/post/post.scss';
+
 const Post = Loadable({
   loader: () => import(/* webpackChunkName: "post" */ '@components/post/post'),
-  loading: () => (
-    <DelayShow delay={500}>
-      <Loading />
-    </DelayShow>
-  )
+  loading(props) {
+    if (props.error) {
+      return <h3>can't load post component.</h3>;
+    } else {
+      return (
+        <DelayShow delay={500}>
+          <Loading />
+        </DelayShow>
+      );
+    }
+  },
+  timeout: 8000
 });
 
 export type PostViewProps = RouteComponentProps<{ path: string }>;

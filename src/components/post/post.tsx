@@ -3,8 +3,6 @@ import marked from 'marked';
 import React from 'react';
 import join from 'url-join';
 
-import './post.scss';
-
 const { Renderer } = marked;
 
 const Post: React.SFC<{ content: string }> = props => {

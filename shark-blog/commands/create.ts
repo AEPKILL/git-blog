@@ -1,7 +1,12 @@
 import { execSync } from 'child_process';
 import { cyan, green, red } from 'cli-color';
 import { Command, command, param } from 'clime';
-import { ensureDirSync, existsSync, writeJSONSync } from 'fs-extra';
+import {
+  ensureDirSync,
+  existsSync,
+  writeFileSync,
+  writeJSONSync
+} from 'fs-extra';
 import { resolve } from 'path';
 import { defaultConfig } from '../utils/blog-config';
 
@@ -27,6 +32,7 @@ export default class extends Command {
       writeJSONSync(resolve(fullPath, 'shark-blog.json'), defaultConfig, {
         spaces: 2
       });
+      writeFileSync(resolve(fullPath, '.nojekyll'), '');
       execSync(`cd ${name}&&blog update --theme&&blog update`);
       return green(`create blog success: ${name}.`);
     } catch (e) {
