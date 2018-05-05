@@ -31,6 +31,9 @@ function redirectImgAndLink(html: string) {
   ) {
     site = host;
   }
+  if (!/^(https:|http:)?\/\//.test(site)) {
+    site = `//${site}`;
+  }
   for (const img of imgs) {
     const src = img.getAttribute('src') || '';
     // http:// | https:// | //
