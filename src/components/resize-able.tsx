@@ -29,6 +29,7 @@ export default class ResizeAble extends React.Component<
   direction = Direction.TOP;
   startCursorPos?: DragPosition;
   elementRect?: ClientRect;
+  preCursor?: string | null;
   constructor(props: ResizeAbleProps) {
     super(props);
     this.state = {};
@@ -115,11 +116,17 @@ export default class ResizeAble extends React.Component<
     if (element.classList.contains('resize-start')) {
       element.classList.remove('resize-start');
     }
+    document.documentElement.style.cursor = this.preCursor!;
     document.removeEventListener('mousemove', this.handleMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);
   }
   handleMouseDown(event: React.MouseEvent<HTMLElement>) {
     const element = ReactDOM.findDOMNode(this) as HTMLElement;
+    this.preCursor = getComputedStyle(document.documentElement).cursor;
+    document.documentElement.style.cursor = getComputedStyle(
+      event.target as Element
+    ).cursor;
+
     if (element.classList.contains('max')) {
       return;
     }

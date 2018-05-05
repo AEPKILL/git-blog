@@ -6,6 +6,8 @@
     "jsx": "react",
     "baseUrl": "./src",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
     "paths": {
       "@stores/*": ["stores/*"],
       "@services/*": ["services/*"],

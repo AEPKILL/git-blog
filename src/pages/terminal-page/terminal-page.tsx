@@ -4,23 +4,23 @@ import i18n from '@i18n';
 
 import * as React from 'react';
 
-import './about-page.scss';
+import './terminal-page.scss';
 
-export interface AboutPageState {
-  name?: string;
-}
+export interface TerminalPageState {}
 
-export default class AboutPage extends React.Component<{}, AboutPageState> {
+export default class TerminalPage extends React.Component<
+  {},
+  TerminalPageState
+> {
   constructor(props: {}) {
     super(props);
-
     this.state = {};
   }
 
   render() {
     return (
       <div className="panel-cover about-page">
-        <Title title={`${i18n.about} - ${BLOG_INFO.BLOG_INFO.title}`} />
+        <Title title={`${i18n.terminal} - ${BLOG_INFO.BLOG_INFO.title}`} />
         <div className="panel-cover--overlay" />
         <Terminal />
       </div>

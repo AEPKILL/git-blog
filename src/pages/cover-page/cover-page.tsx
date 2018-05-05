@@ -41,8 +41,8 @@ export default class CoverPage extends React.Component<CoverPageProps> {
                       </Link>
                     </li>
                     <li className="navigation__item">
-                      <Link to="/about" className="button">
-                        {i18n.about}
+                      <Link to="/terminal" className="button">
+                        {i18n.terminal}
                       </Link>
                     </li>
                     <li className="navigation__item">

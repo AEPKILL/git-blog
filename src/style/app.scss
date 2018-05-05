@@ -136,6 +136,17 @@ code {
   font-size: 0.85em;
 }
 
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f4f4f4;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #999999;
+  border-radius: 4px;
+}
+
 @import './scroll-bar.scss';
 @import './panel.scss';
 @import './navigation.scss';

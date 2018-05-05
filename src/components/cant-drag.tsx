@@ -6,7 +6,6 @@ export default class CantDrag extends React.Component {
       React.cloneElement(React.Children.only(child), {
         onMouseDown(event: React.MouseEvent<HTMLElement>) {
           event.stopPropagation();
-          event.preventDefault();
         }
       })
     );

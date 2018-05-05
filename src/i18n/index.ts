@@ -28,7 +28,7 @@ export function coverI18n(name: string | { zh?: string; en?: string }) {
   if (lang == 'zh' && name.zh) {
     return name.zh;
   }
-  if (lang == 'en' && name.en) {
+  if (name.en) {
     return name.en;
   }
   return '';

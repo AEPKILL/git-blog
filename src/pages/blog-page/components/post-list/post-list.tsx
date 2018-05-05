@@ -17,7 +17,7 @@ import './post-list.scss';
 
 export interface PostListProps {
   title?: string;
-  classNames?: string;
+  className?: string;
   page?: string;
   api: string;
   basePath: string;
@@ -26,18 +26,23 @@ export interface PostListProps {
 
 @observer
 export default class PostList extends React.Component<PostListProps, {}> {
-  context!: RouterChildContext<{}>;
   @inject('postList') postLit!: AsyncData<PostPagesMeta>;
+  context!: RouterChildContext<{}>;
+
   constructor(props: PostListProps) {
     super(props);
     this.updateData = this.updateData.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
   updateData() {
     const { api, page } = this.props;
     const postPaging = new PostPagingFetchServices(api);
     this.postLit.waitData(postPaging.get(page || 0));
   }
+  handlePageChange(page: number) {
+    this.context.router.history.push(join('/', this.props.basePath, `${page}`));
+  }
+
   componentDidUpdate(prePops: PostListProps) {
     if (this.props.page === prePops.page && this.props.api === prePops.api) {
       return;
@@ -46,9 +51,6 @@ export default class PostList extends React.Component<PostListProps, {}> {
   }
   componentDidMount() {
     this.updateData();
-  }
-  onPageChange(page: number) {
-    this.context.router.history.push(join('/', this.props.basePath, `${page}`));
   }
   asyncRender() {
     const { error, data, asyncStstus } = this.postLit;
@@ -94,7 +96,7 @@ export default class PostList extends React.Component<PostListProps, {}> {
           total={this.props.total}
           current={+page}
           pageSize={BLOG_INFO.BLOG_INFO.pageSize}
-          onChange={this.onPageChange}
+          onChange={this.handlePageChange}
         />
       </div>
     );
@@ -104,7 +106,7 @@ export default class PostList extends React.Component<PostListProps, {}> {
       <h1 className="title">{this.props.title}</h1>
     ) : null;
     return (
-      <div className={classnames(this.props.classNames, 'blog-view post-list')}>
+      <div className={classnames(this.props.className, 'blog-view post-list')}>
         {title}
         {this.asyncRender()}
       </div>

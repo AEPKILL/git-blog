@@ -61,6 +61,62 @@ export default {
   },
   terminal: {
     zh: '终端',
-    en: 'terminal'
+    en: 'Terminal'
+  },
+  commandNotFound: {
+    zh: '找不到这个命令',
+    en: 'command not found'
+  },
+  lsDescription: {
+    zh: '列表显示文件信息',
+    en: 'list information about the FILEs'
+  },
+  cdDescription: {
+    zh: '改变当前工作目录',
+    en: 'change the working directory'
+  },
+  catDescription: {
+    zh: '显示一个文本文件的内容',
+    en: 'view a text file content'
+  },
+  clsDescription: {
+    zh: '清除终端屏幕内容',
+    en: 'clear the terminal screen'
+  },
+  exitDescription: {
+    zh: '退出终端',
+    en: 'exit terminal app'
+  },
+  helpDescription: {
+    zh: '显示帮助信息',
+    en: 'show help information'
+  },
+  pwdDescription: {
+    zh: '显示当前工作目录',
+    en: 'show the working directory'
+  },
+  whoIAm: {
+    zh: '展示一些个人信息',
+    en: 'show who i am'
+  },
+  useage: {
+    zh: '使用方法',
+    en: 'useage'
+  },
+  notDirectory: {
+    zh: '不是一个目录',
+    en: 'not a directory'
+  },
+  notFile: {
+    zh: '不是一个文件',
+    en: 'not a file'
+  },
+  notFileOrDirectory: {
+    zh: '不是一个文件或目录',
+    en: 'not a file or directory'
+  },
+  cannotFindPath: {
+    zh: '找不到指定路径',
+    en: 'cannot find the path specified.'
   }
 };

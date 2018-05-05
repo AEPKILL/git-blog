@@ -37,8 +37,8 @@ export default class NoFoundPage extends React.Component<{}, NoFoundState> {
                       </Link>
                     </li>
                     <li className="navigation__item">
-                      <Link to="/about" className="button">
-                        {i18n.about}
+                      <Link to="/terminal" className="button">
+                        {i18n.terminal}
                       </Link>
                     </li>
                     <li className="navigation__item">

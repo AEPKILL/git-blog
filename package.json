@@ -11,11 +11,11 @@
     "theme"
   ],
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.config.dev.ts --hot",
+    "start": "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=development webpack-dev-server --config ./build/webpack.config.dev.ts --hot",
     "start:bin": "tsc -p ./shark-blog/tsconfig.json -w",
     "build": "npm run build:bin&&npm run build:prod&&npm run build:theme",
     "build:theme": "ts-node ./build/build-theme",
-    "build:prod": "cross-env NODE_ENV=production webpack --config ./build/webpack.config.prod.ts",
+    "build:prod": "cross-env TS_NODE_PROJECT=./build/tsconfig.json NODE_ENV=production webpack --config ./build/webpack.config.prod.ts",
     "build:bin": "cleandir ./bin&&tsc -p ./shark-blog/tsconfig.json"
   },
   "keywords": [],
@@ -36,6 +36,7 @@
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.3.10",
     "@types/react-dom": "^16.0.4",
+    "@types/react-loadable": "^5.3.4",
     "@types/react-router": "^4.0.23",
     "@types/react-router-dom": "^4.2.6",
     "@types/url-join": "^0.8.2",
@@ -46,6 +47,7 @@
     "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-dir": "^1.0.3",
@@ -67,6 +69,7 @@
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-hot-loader": "^4.0.1",
+    "react-loadable": "^5.4.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "sass-loader": "^6.0.7",

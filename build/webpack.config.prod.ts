@@ -62,7 +62,9 @@ const config: Configuration = {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor'
+          name: 'vendor',
+          chunks: 'all',
+          priority: -20
         }
       }
     }

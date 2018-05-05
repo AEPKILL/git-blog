@@ -3,16 +3,25 @@ import Error from '@components/error/error';
 import ImgPreview from '@components/img-preview/img-preview';
 import Loading from '@components/loading/loading';
 import PostMeta from '@components/post-meta/post-meta';
-import Post from '@components/post/post';
 import Title from '@components/title';
 import PostFetchServices from '@services/post-fetch';
 import AsyncData, { ASYNC_STATUS } from '@stores/utils/async-data';
 import separateMarkdownMeta from '../../../../../bin/separate-markdown-meta';
 
 import * as React from 'react';
+import Loadable from 'react-loadable';
 import { RouteComponentProps } from 'react-router';
 import { inject, observer } from 'ts-mobx-react';
 import join from 'url-join';
+
+const Post = Loadable({
+  loader: () => import(/* webpackChunkName: "post" */ '@components/post/post'),
+  loading: () => (
+    <DelayShow delay={500}>
+      <Loading />
+    </DelayShow>
+  )
+});
 
 export type PostViewProps = RouteComponentProps<{ path: string }>;
 
@@ -48,6 +57,12 @@ export default class PostView extends React.Component<
   componentDidMount() {
     this.loadPost();
     this.postViewRef.current!.addEventListener('click', this.handlePreviewImg);
+  }
+  componentWillUnmount() {
+    this.postViewRef.current!.removeEventListener(
+      'click',
+      this.handlePreviewImg
+    );
   }
   handlePreviewImg(event: Event) {
     const target = event.target as HTMLImageElement;

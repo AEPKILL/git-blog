@@ -2,7 +2,7 @@ export const buildInfo = [
   '',
   '',
   `theme: ${process.env.npm_package_name}`,
-  `date: ${new Date().toLocaleString()}`,
+  `build: ${new Date().toLocaleString()}`,
   `author: AEPKILL`,
   `version: ${process.env.npm_package_version}`,
   '',
