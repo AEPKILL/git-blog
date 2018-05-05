@@ -12,20 +12,17 @@ const PostMeta: React.SFC<{ meta: PostMeta }> = ({ meta }) => {
       <Link to={`/blog/categories/${meta.categories}`}>{meta.categories}</Link>
     </span>
   );
-  const tagsNode = meta.tags && (
-    <span className="post-meta__tags">
-      <span>• {i18n.tag}:</span>
-      {meta.tags.map(tag => (
-        <Link
-          className="post-meta__tag"
-          key={tag}
-          to={`/blog/tag/${tag}`}
-        >
-          {tag}
-        </Link>
-      ))}
-    </span>
-  );
+  const tagsNode =
+    meta.tags && meta.tags.length ? (
+      <span className="post-meta__tags">
+        <span>• {i18n.tag}:</span>
+        {meta.tags.map(tag => (
+          <Link className="post-meta__tag" key={tag} to={`/blog/tag/${tag}`}>
+            {tag}
+          </Link>
+        ))}
+      </span>
+    ) : null;
   return (
     <div className="post-meta">
       <span className="post-meta__date">{meta.date}</span>

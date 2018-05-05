@@ -12,6 +12,10 @@
 npm install shark-blog -g
 ```
 
+# 预览
+
+[AEPKILL-BLOG](http://blog.aepkill.com/)
+
 # 快速上手
 
 创建一个新的博客并启动一个本地服务器来预览:

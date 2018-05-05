@@ -22,11 +22,20 @@ function redirectImgAndLink(html: string) {
   div.innerHTML = html;
   const imgs = Array.from(div.querySelectorAll('img'));
   const links = Array.from(div.querySelectorAll('a'));
+  let site = BLOG_INFO.BLOG_INFO.site;
   for (const img of imgs) {
     const src = img.getAttribute('src') || '';
+    const host = document.location.host;
+    if (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host.indexOf('192.168') >= 0
+    ) {
+      site = host;
+    }
     // http:// | https:// | //
     if (!/^(https:|http:)?\/\//.test(src)) {
-      img.src = join(BLOG_INFO.BLOG_INFO.site, postDir, src);
+      img.src = join(site, postDir, src);
     }
   }
   for (const link of links) {
