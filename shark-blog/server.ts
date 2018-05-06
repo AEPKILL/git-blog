@@ -1,5 +1,5 @@
 import { cyan, green, red, yellow } from 'cli-color';
-import { IncomingMessage, ServerResponse } from 'http';
+import { IncomingMessage, ServerRequest, ServerResponse } from 'http';
 import { createServer } from 'http-server';
 import opener from 'opener';
 import { networkInterfaces } from 'os';
@@ -37,7 +37,9 @@ export default class Server {
     const config = getConfig();
     const server = createServer({
       root: config.rootDir,
-      logFn: logger
+      logFn: logger,
+      // tslint:disable-next-line:no-any
+      cache: 'no-cache' as any
     });
     let port: number;
 
