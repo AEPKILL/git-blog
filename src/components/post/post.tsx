@@ -1,14 +1,15 @@
 import highlightJs from 'highlight.js';
 import marked from 'marked';
+import { dirname } from 'path';
 import React from 'react';
 import join from 'url-join';
 
 const { Renderer } = marked;
 
-const Post: React.SFC<{ content: string }> = props => {
+const Post: React.SFC<{ content: string; postPath: string }> = props => {
   let htmlString = marked.parse(props.content);
   if (BLOG_INFO.BLOG_INFO.site) {
-    htmlString = redirectImgAndLink(htmlString);
+    htmlString = redirectImgAndLink(htmlString, props.postPath);
   }
   const html = {
     __html: htmlString
@@ -16,9 +17,9 @@ const Post: React.SFC<{ content: string }> = props => {
   return <article className="post-content" dangerouslySetInnerHTML={html} />;
 };
 
-function redirectImgAndLink(html: string) {
+function redirectImgAndLink(html: string, postPath: string) {
   const div = document.createElement('div');
-  const postDir = BLOG_INFO.BLOG_INFO.postDir;
+  const postDir = dirname(postPath);
   div.innerHTML = html;
   const imgs = Array.from(div.querySelectorAll('img'));
   const links = Array.from(div.querySelectorAll('a'));

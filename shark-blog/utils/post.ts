@@ -130,6 +130,7 @@ export async function collectAllPostMetadata() {
     const filename = basename(path);
     return filename[0] !== '.' && /.md$/.test(filename);
   });
+  console.log(postPaths);
   const config = getConfig();
 
   const posts: PostMetadata[] = (await Promise.all(

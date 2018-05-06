@@ -11,16 +11,16 @@ export function readDirFiles(
   for (const file of files) {
     const fileFullPath = resolve(path, file);
     const relativePath = join(re, file);
-    if (typeof match === 'function') {
-      if (!match(relativePath)) {
-        continue;
-      }
-    } else if (match && !match.test(relativePath)) {
-      continue;
-    }
     if (statSync(fileFullPath).isDirectory()) {
       result = result.concat(readDirFiles(fileFullPath, match, relativePath));
     } else {
+      if (typeof match === 'function') {
+        if (!match(relativePath)) {
+          continue;
+        }
+      } else if (match && !match.test(relativePath)) {
+        continue;
+      }
       result.push(relativePath);
     }
   }

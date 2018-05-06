@@ -103,6 +103,7 @@ export default class PostView extends React.Component<
   }
   asyncRender() {
     const { error, data, asyncStstus } = this.post;
+    const { path } = this.props.match.params;
     switch (asyncStstus) {
       case ASYNC_STATUS.LOADING: {
         return (
@@ -124,7 +125,7 @@ export default class PostView extends React.Component<
         <Title title={`${meta.title} - ${BLOG_INFO.BLOG_INFO.title}`} />
         <h1>{meta.title}</h1>
         <PostMeta meta={meta} />
-        <Post content={content} />
+        <Post content={content} postPath={path} />
       </>
     );
   }
