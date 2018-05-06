@@ -24,11 +24,8 @@ function redirectImgAndLink(html: string) {
   const links = Array.from(div.querySelectorAll('a'));
   const host = document.location.host;
   let site = BLOG_INFO.BLOG_INFO.site;
-  if (
-    host === 'localhost' ||
-    host === '127.0.0.1' ||
-    host.indexOf('192.168') == 0
-  ) {
+  const [ip] = host.split(':');
+  if (ip === 'localhost' || ip === '127.0.0.1' || ip.indexOf('192.168') == 0) {
     site = host;
   }
   if (!/^(https:|http:)?\/\//.test(site)) {

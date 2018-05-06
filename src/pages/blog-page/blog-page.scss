@@ -3,9 +3,11 @@ body {
 }
 .blog {
   width: 100%;
-  &-view,
-  img {
+  &-view {
     max-width: 960px;
+  }
+  img {
+    max-width: 100%;
   }
   img {
     cursor: zoom-in;
@@ -94,9 +96,6 @@ body {
     .left-side {
       left: -80%;
     }
-    img {
-      max-width: 500px;
-    }
     .content-side.show-left-side {
       transform: translateX(80%);
     }
@@ -107,9 +106,6 @@ body {
   .blog {
     .menu-button {
       display: none;
-    }
-    img {
-      max-width: 400px;
     }
     .left-side {
       position: relative;
