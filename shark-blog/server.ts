@@ -1,10 +1,15 @@
+import * as cheerio from 'cheerio';
 import { cyan, green, red, yellow } from 'cli-color';
+import { ReadStream } from 'fs';
 import { IncomingMessage, ServerRequest, ServerResponse } from 'http';
 import { createServer } from 'http-server';
 import opener from 'opener';
 import { networkInterfaces } from 'os';
+import { extname } from 'path';
 import { getPortPromise } from 'portfinder';
 import { createInterface } from 'readline';
+import ws from 'ws';
+import injectCode from './inject-code';
 import Updater from './updater';
 import { getConfig } from './utils/blog-config';
 import workspace from './utils/workspace';
@@ -33,13 +38,15 @@ function logger(req: IncomingMessage, _res: ServerResponse, error: Error) {
 
 export default class Server {
   private updater = new Updater();
+  private wsClients: ws[] = [];
   async start() {
     const config = getConfig();
     const server = createServer({
       root: config.rootDir,
       logFn: logger,
       // tslint:disable-next-line:no-any
-      cache: 'no-cache' as any
+      cache: 'no-cache' as any,
+      before: [this.injectLiveReloadCode.bind(this)]
     });
     let port: number;
 
@@ -56,6 +63,30 @@ export default class Server {
       this.onServerStart(port);
     });
 
+    const wsServer = new ws.Server({ noServer: true });
+
+    wsServer.on('connection', wsClient => {
+      this.wsClients.push(wsClient);
+      wsClient.send('connected');
+    });
+
+    wsServer.on('close', wsClient => {
+      this.wsClients = this.wsClients.filter(client => client !== wsClient);
+    });
+
+    // tslint:disable-next-line:no-any
+    ((server as any).server as typeof server).on(
+      'upgrade',
+      (request, socket, head) => {
+        wsServer.handleUpgrade(request, socket, head, wsClient => {
+          wsServer.emit('connection', wsClient, request);
+          wsClient.onclose = () => {
+            wsServer.emit('close', wsClient);
+          };
+        });
+      }
+    );
+
     process.on('SIGINT', this.onServerStoped.bind(this));
     process.on('SIGTERM', this.onServerStoped.bind(this));
 
@@ -68,7 +99,25 @@ export default class Server {
       });
     }
   }
-
+  private injectLiveReloadCode(_req: ServerRequest, res: ServerResponse) {
+    res.emit('next');
+    res.on('pipe', (stream: ReadStream) => {
+      let content = '';
+      if (extname(stream.path.toString()) === '.html') {
+        stream.unpipe(res);
+        stream.on('data', (data: string) => {
+          content += data;
+        });
+        stream.on('close', () => {
+          const $ = cheerio.load(content);
+          $('head').append(injectCode);
+          content = $.html();
+          res.setHeader('content-length', new Buffer(content).length);
+          res.end(content);
+        });
+      }
+    });
+  }
   private onServerStart(port: number) {
     const ifaces = networkInterfaces();
     opener(`http://localhost:${port}`);
@@ -81,6 +130,9 @@ export default class Server {
       }
     }
     this.updater.watch();
+    this.updater.on('updated', () => {
+      this.wsClients.forEach(wsClient => wsClient.send('reload'));
+    });
     console.log(`Hit CTRL-C to stop the server.`);
   }
   private onServerStoped() {

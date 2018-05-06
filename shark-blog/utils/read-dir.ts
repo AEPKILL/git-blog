@@ -3,7 +3,7 @@ import { join, resolve } from 'path';
 
 export function readDirFiles(
   path: string,
-  match: RegExp | null = null,
+  match: RegExp | null | ((path: string) => boolean) = null,
   re = ''
 ) {
   const files = readdirSync(path);
@@ -11,7 +11,11 @@ export function readDirFiles(
   for (const file of files) {
     const fileFullPath = resolve(path, file);
     const relativePath = join(re, file);
-    if (match && !match.test(relativePath)) {
+    if (typeof match === 'function') {
+      if (!match(relativePath)) {
+        continue;
+      }
+    } else if (match && !match.test(relativePath)) {
       continue;
     }
     if (statSync(fileFullPath).isDirectory()) {

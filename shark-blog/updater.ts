@@ -1,5 +1,6 @@
 import chokidar from 'chokidar';
 import { cyan, green, red, yellow } from 'cli-color';
+import { EventEmitter } from 'events';
 import { removeSync } from 'fs-extra';
 import { createInterface } from 'readline';
 import addPostFiles from './plugins/add-post-files';
@@ -10,7 +11,7 @@ import FileEmitter from './utils/file-emitter';
 import { collectAllPostMetadata } from './utils/post';
 import workspace from './utils/workspace';
 
-export default class Updater {
+export default class Updater extends EventEmitter {
   private updating = false;
   private needUpdate = false;
 
@@ -25,7 +26,9 @@ export default class Updater {
       addPostFiles(postsMetadata, fileEmitter);
       addTagsAndCategoriesFiles(postsMetadata, fileEmitter);
       fileEmitter.emitFile();
-      console.log(green(`update blog metadata success, ${Date.now() - startTime}ms.`));
+      console.log(
+        green(`update blog metadata success, ${Date.now() - startTime}ms.`)
+      );
     } catch (e) {
       console.log(red(`update blog metadata failed: ${e.message}.`));
     }
@@ -38,7 +41,7 @@ export default class Updater {
     chokidar
       .watch(workspace.getPostDir(), { ignoreInitial: true })
       .on('all', (_event, path: string) => {
-        if (/\.md/i.test(path)) {
+        if (/\.md$/i.test(path)) {
           this.onFileChange(path);
         }
       });
@@ -67,6 +70,7 @@ export default class Updater {
       await this.update();
     }
     this.updating = false;
+    this.emit('updated');
   }
   private onWatchStoped() {
     console.log(red('watching stoped.'));

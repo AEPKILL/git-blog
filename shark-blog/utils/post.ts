@@ -126,7 +126,10 @@ export function collectPostMetadata(path: string, relativePath: string) {
  * @returns
  */
 export async function collectAllPostMetadata() {
-  const postPaths = readDirFiles(workspace.getPostDir(), /.md$/i);
+  const postPaths = readDirFiles(workspace.getPostDir(), path => {
+    const filename = basename(path);
+    return filename[0] !== '.' && /.md$/.test(filename);
+  });
   const config = getConfig();
 
   const posts: PostMetadata[] = (await Promise.all(
