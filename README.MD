@@ -2,9 +2,6 @@
 
 一个简单易用的静态博客框架
 
->这真是一个极好的博客解决方案。  --尼古拉斯·赵四
->
->Wow , such a easy static blog framework.  --Isaac·Two·Dog
 
 # 安装
 

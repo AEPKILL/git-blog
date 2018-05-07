@@ -2,9 +2,6 @@
 
 a simple & easy static blog framework
 
->这真是一个极好的博客解决方案。  --尼古拉斯·赵四
->
->Wow , such a easy static blog framework.  --Isaac·Two·Dog
 
 # Install
 
