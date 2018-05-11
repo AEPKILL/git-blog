@@ -102,6 +102,9 @@ export class TerminalStore {
   hint(command: string) {
     const [appName, ...args] = command.trim().split(/\s+/);
     let result: string[] = [];
+    if (appName.length === 0) {
+      return null;
+    }
     if (!args.length && command[command.length - 1] !== ' ') {
       for (const app of this.apps) {
         if (typeof app.name === 'string') {
