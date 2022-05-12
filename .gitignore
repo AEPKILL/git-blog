@@ -1,7 +1,6 @@
 /node_modules/
 /.awcache/
 bin/
-theme/
 dist/
 .vscode/
 .ref/
