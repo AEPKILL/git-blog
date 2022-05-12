@@ -30,12 +30,13 @@
     "@shark-blog/theme": "^2.0.0",
     "@shark-blog/types": "^2.0.0",
     "@types/fs-extra": "^9.0.13",
+    "cheerio": "^1.0.0-rc.10",
     "clime": "^0.5.14",
     "fs-extra": "^10.1.0"
   },
   "devDependencies": {
-    "typescript": "^4.6.4",
     "cross-env": "^7.0.3",
-    "ts-node": "^10.7.0"
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   }
 }
