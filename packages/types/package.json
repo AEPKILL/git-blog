@@ -16,5 +16,6 @@
     "url": "https://github.com/AEPKILL/shark-blog/issues"
   },
   "dependencies": {
+    "typescript": "^4.6.4"
   }
 }

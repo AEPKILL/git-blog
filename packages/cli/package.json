@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "@shark-blog/cli",
   "version": "2.0.0",
   "description": "shark blog cli",
   "keywords": [
@@ -20,14 +20,22 @@
     "url": "git+https://github.com/AEPKILL/shark-blog.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "cross-env  NODE_ENV=development ts-node src/cli.ts",
+    "build": "ts-node scripts/build&&tsc --project tsconfig.json"
   },
   "bugs": {
     "url": "https://github.com/AEPKILL/shark-blog/issues"
   },
   "dependencies": {
+    "@shark-blog/theme": "^2.0.0",
     "@shark-blog/types": "^2.0.0",
-    "types": "^0.1.1"
+    "@types/fs-extra": "^9.0.13",
+    "clime": "^0.5.14",
+    "fs-extra": "^10.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.7.0"
   }
 }
-
