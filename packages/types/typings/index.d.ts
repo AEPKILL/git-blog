@@ -12,7 +12,7 @@ declare namespace SharkBlog {
     theme: string;
     concat: string;
     publicPath: string;
-    htmlInject: string[];
     extra?: T;
   }
 }
+
